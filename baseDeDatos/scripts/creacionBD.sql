@@ -38,10 +38,10 @@ create table vuelos (
     idTipoVuelo int unsigned not null,
     idAeropuertoOrigen int unsigned not null,
     idAeropuertoDestino int unsigned not null,
-    fechaDeSalida datetime,
-    fechaDeLlegada datetime,
-    precio double,
-    asientosDisponibles int,
+    fechaDeSalida datetime not null,
+    fechaDeLlegada datetime not null,
+    precio double not null,
+    asientosDisponibles int not null,
     foreign key (idAerolinea) references aerolineas(idAerolinea),
     foreign key (idTipoVuelo) references tiposVuelo(idTipoVuelo),
     foreign key (idAeropuertoOrigen) references aeropuertos(idAeropuerto),
@@ -64,7 +64,7 @@ create table reservas (
 	idReserva int primary key auto_increment,
     idVuelo int unsigned not null,
     idPasajero int unsigned not null,
-    fechaReserva datetime,
+    fechaReserva datetime not null,
     foreign key (idVuelo) references vuelos(idVuelo),
     foreign key (idPasajero) references pasajeros(idPasajero)
 );
