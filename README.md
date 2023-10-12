@@ -13,4 +13,7 @@ incluyendo información detallada sobre los horarios, precios, aerolíneas, y ru
 
 ## Diagrama relacional
 
-![Diagrama de clases]()
+![Diagrama de clases](https://i.ibb.co/p1wz6SG/sistema-Vuelos.png)
+
+
+
