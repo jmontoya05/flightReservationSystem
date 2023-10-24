@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS flightReservationSystem;
-CREATE DATABASE flightReservationSystem;
-USE flightReservationSystem;
+DROP DATABASE IF EXISTS flight_reservation_system;
+CREATE DATABASE flight_reservation_system;
+USE flight_reservation_system;
 
 CREATE TABLE countries (
 	country_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -9,7 +9,7 @@ CREATE TABLE countries (
 
 CREATE TABLE cities (
 	city_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    ciudad VARCHAR(30) NOT NULL,
+    city VARCHAR(30) NOT NULL,
     country_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (country_id) REFERENCES countries(country_id)
 );
@@ -32,8 +32,7 @@ CREATE TABLE flight_types (
 );
 
 CREATE TABLE flights (
-	flight_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    flight_code VARCHAR(10) NOT NULL UNIQUE,
+    flight_code VARCHAR(10) PRIMARY KEY,
     airline_id INT UNSIGNED NOT NULL,
     flight_type_id INT UNSIGNED NOT NULL,
     airport_origin_id INT UNSIGNED NOT NULL,
@@ -62,9 +61,9 @@ CREATE TABLE passengers (
 
 CREATE TABLE reservations (
 	reservation_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    flight_id INT UNSIGNED NOT NULL,
+    flight_code VARCHAR(10) NOT NULL,
     passenger_id INT UNSIGNED NOT NULL,
     reservation_date DATETIME NOT NULL,
-    FOREIGN KEY (flight_id) REFERENCES flights(flight_id),
+    FOREIGN KEY (flight_code) REFERENCES flights(flight_code),
     FOREIGN KEY (passenger_id) REFERENCES passengers(passenger_id)
 );
