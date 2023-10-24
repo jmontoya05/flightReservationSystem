@@ -8,12 +8,12 @@ incluyendo información detallada sobre los horarios, precios, aerolíneas, y ru
 
 ## Diagrama de clases
 
-![Diagrama de clases](https://i.ibb.co/4S8h8Dj/Sistema-Reserva-De-Vuelos.png)
+![Diagrama de clases](https://i.ibb.co/bRg8Hqd/Sistema-Reserva-De-Vuelos.png)
 
 
 ## Diagrama relacional
 
-![Diagrama de clases](https://i.ibb.co/p1wz6SG/sistema-Vuelos.png)
+![Diagrama de clases](https://i.ibb.co/DLK8sXM/sistema-Vuelos.png)
 
 
 
