@@ -40,7 +40,7 @@ public class CountryService {
     public String deleteCountry(Integer countryId){
         Country countryToDelete = this.getCountry(countryId).orElse(null);
         if (countryToDelete != null){
-            countryRepository.delete(countryToDelete);
+            countryRepository.deleteById(countryId);
             return "Country successfully eliminated";
         }
         throw new RuntimeException();
