@@ -5,19 +5,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "countries")
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "country_id", length = 20)
+    @Column(name = "country_id")
     private Integer countryId;
-    @Column(nullable = false)
+    @Column(nullable = false,  length = 20)
     private String country;
+    @OneToMany(mappedBy = "country")
+    private List<City> cities;
 
     public Country() {
+    }
+
+    public Country(Integer countryId, String country, List<City> cities) {
+        this.countryId = countryId;
+        this.country = country;
+        this.cities = cities;
     }
 
     public Integer getCountryId() {
@@ -34,5 +44,13 @@ public class Country {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
     }
 }

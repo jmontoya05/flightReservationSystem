@@ -20,6 +20,11 @@ public class FlightType {
     public FlightType() {
     }
 
+    public FlightType(Integer flightTypeId, String flightType) {
+        this.flightTypeId = flightTypeId;
+        this.flightType = flightType;
+    }
+
     public Integer getFlightTypeId() {
         return flightTypeId;
     }

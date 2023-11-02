@@ -7,7 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "cities")
@@ -23,8 +25,18 @@ public class City {
     @ManyToOne
     @JoinColumn(name = "country_id", insertable = false, updatable = false)
     private Country country;
+    @OneToMany(mappedBy = "city")
+    private List<Airport> airports;
 
     public City() {
+    }
+
+    public City(Integer cityId, String city, Integer countryId, Country country, List<Airport> airports) {
+        this.cityId = cityId;
+        this.city = city;
+        this.countryId = countryId;
+        this.country = country;
+        this.airports = airports;
     }
 
     public Integer getCityId() {
@@ -49,5 +61,17 @@ public class City {
 
     public void setCountryId(Integer countryId) {
         this.countryId = countryId;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public List<Airport> getAirports() {
+        return airports;
+    }
+
+    public void setAirports(List<Airport> airports) {
+        this.airports = airports;
     }
 }

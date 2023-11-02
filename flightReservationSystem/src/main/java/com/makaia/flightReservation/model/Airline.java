@@ -20,6 +20,11 @@ public class Airline {
     public Airline() {
     }
 
+    public Airline(Integer airlineId, String airlineName) {
+        this.airlineId = airlineId;
+        this.airlineName = airlineName;
+    }
+
     public Integer getAirlineId() {
         return airlineId;
     }

@@ -5,9 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "flights")
@@ -43,8 +45,27 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "airport_destination_id", insertable = false, updatable = false)
     private Airport airportDestination;
+    @OneToMany(mappedBy = "flight")
+    private List<Reservation> reservations;
 
     public Flight() {
+    }
+
+    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airport_origin_id, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination, List<Reservation> reservations) {
+        this.flightCode = flightCode;
+        this.airlineId = airlineId;
+        this.flightTypeId = flightTypeId;
+        this.airport_origin_id = airport_origin_id;
+        this.airportDestinationId = airportDestinationId;
+        this.departureDate = departureDate;
+        this.arrivalDate = arrivalDate;
+        this.price = price;
+        this.availableSeats = availableSeats;
+        this.airline = airline;
+        this.flightType = flightType;
+        this.airportOrigin = airportOrigin;
+        this.airportDestination = airportDestination;
+        this.reservations = reservations;
     }
 
     public String getFlightCode() {
@@ -118,4 +139,45 @@ public class Flight {
     public void setAvailableSeats(Integer availableSeats) {
         this.availableSeats = availableSeats;
     }
+
+    public Airline getAirline() {
+        return airline;
+    }
+
+    public void setAirline(Airline airline) {
+        this.airline = airline;
+    }
+
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
+
+    public Airport getAirportOrigin() {
+        return airportOrigin;
+    }
+
+    public void setAirportOrigin(Airport airportOrigin) {
+        this.airportOrigin = airportOrigin;
+    }
+
+    public Airport getAirportDestination() {
+        return airportDestination;
+    }
+
+    public void setAirportDestination(Airport airportDestination) {
+        this.airportDestination = airportDestination;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+    }
 }
+

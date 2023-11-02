@@ -27,6 +27,13 @@ public class Airport {
     public Airport() {
     }
 
+    public Airport(Integer airportId, String airportName, Integer cityId, City city) {
+        this.airportId = airportId;
+        this.airportName = airportName;
+        this.cityId = cityId;
+        this.city = city;
+    }
+
     public Integer getAirportId() {
         return airportId;
     }
@@ -49,5 +56,9 @@ public class Airport {
 
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
