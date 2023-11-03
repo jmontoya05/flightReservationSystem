@@ -20,11 +20,11 @@ public class Passenger {
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 15, unique = true)
     private String passport;
     @Column(nullable = false, length = 20)
     private String nationality;
-    @Column(length = 30)
+    @Column(length = 30, unique = true)
     private String email;
     @Column(name = "phone_number", nullable = false, length = 15)
     private String phoneNumber;
