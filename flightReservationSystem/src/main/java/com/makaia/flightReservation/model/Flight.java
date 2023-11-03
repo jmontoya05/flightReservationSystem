@@ -22,7 +22,7 @@ public class Flight {
     @Column(name = "flight_type_id", nullable = false)
     private Integer flightTypeId;
     @Column(name = "airport_origin_id", nullable = false)
-    private Integer airport_origin_id;
+    private Integer airportOriginId;
     @Column(name = "airport_destination_id", nullable = false)
     private Integer airportDestinationId;
     @Column(name = "departure_date", nullable = false)
@@ -51,11 +51,11 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airport_origin_id, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination, List<Reservation> reservations) {
+    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airportOriginId, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination, List<Reservation> reservations) {
         this.flightCode = flightCode;
         this.airlineId = airlineId;
         this.flightTypeId = flightTypeId;
-        this.airport_origin_id = airport_origin_id;
+        this.airportOriginId = airportOriginId;
         this.airportDestinationId = airportDestinationId;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
@@ -92,12 +92,12 @@ public class Flight {
         this.flightTypeId = flightTypeId;
     }
 
-    public Integer getAirport_origin_id() {
-        return airport_origin_id;
+    public Integer getAirportOriginId() {
+        return airportOriginId;
     }
 
-    public void setAirport_origin_id(Integer airport_origin_id) {
-        this.airport_origin_id = airport_origin_id;
+    public void setAirportOriginId(Integer airportOriginId) {
+        this.airportOriginId = airportOriginId;
     }
 
     public Integer getAirportDestinationId() {

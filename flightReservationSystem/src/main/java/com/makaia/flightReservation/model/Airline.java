@@ -16,13 +16,16 @@ public class Airline {
     private Integer airlineId;
     @Column(name = "airline_name", nullable = false, length = 30)
     private String airlineName;
+    @Column(name = "flight_sequence", nullable = false)
+    private Integer flightSequence;
 
     public Airline() {
     }
 
-    public Airline(Integer airlineId, String airlineName) {
+    public Airline(Integer airlineId, String airlineName, Integer flightSequence) {
         this.airlineId = airlineId;
         this.airlineName = airlineName;
+        this.flightSequence = flightSequence;
     }
 
     public Integer getAirlineId() {
@@ -39,5 +42,13 @@ public class Airline {
 
     public void setAirlineName(String airlineName) {
         this.airlineName = airlineName;
+    }
+
+    public Integer getFlightSequence() {
+        return flightSequence;
+    }
+
+    public void setFlightSequence(Integer flightSequence) {
+        this.flightSequence = flightSequence;
     }
 }

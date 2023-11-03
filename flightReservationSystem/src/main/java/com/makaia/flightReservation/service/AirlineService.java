@@ -17,6 +17,7 @@ public class AirlineService {
     }
 
     public Airline saveAirline(Airline airline){
+        airline.setFlightSequence(0);
         return airlineRepository.save(airline);
     }
 
@@ -35,6 +36,10 @@ public class AirlineService {
             return airlineRepository.save(airlineToUpdate);
         }
         throw new RuntimeException();
+    }
+
+    public void updateFlightSequence(Airline airline){
+        airlineRepository.save(airline);
     }
 
     public String deleteAirline(Integer airlineId){
