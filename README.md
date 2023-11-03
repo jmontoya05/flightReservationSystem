@@ -12,4 +12,6 @@ incluyendo información detallada sobre los horarios, precios, aerolíneas, y ru
 
 ## Diagrama relacional
 
-![Diagrama de clases](https://i.ibb.co/1mH5mr2/flight-System.png)
+![Diagrama de clases](/classDiagram/flightReservationSystem.png)
+
+<!-- (https://i.ibb.co/1mH5mr2/flight-System.png) -->
