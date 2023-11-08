@@ -1,5 +1,6 @@
 package com.makaia.flightReservation.controller;
 
+import com.makaia.flightReservation.dto.FlightTypeDTO;
 import com.makaia.flightReservation.model.FlightType;
 import com.makaia.flightReservation.service.FlightTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,21 @@ public class FlightTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<FlightType> saveFlightType(@RequestBody FlightType flightType){
-        return new ResponseEntity<>(flightTypeService.saveFlightType(flightType), HttpStatus.CREATED);
+    public ResponseEntity<FlightTypeDTO> saveFlightType(@RequestBody FlightTypeDTO flightTypeDTO){
+        return new ResponseEntity<>(flightTypeService.saveFlightType(flightTypeDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{flightTypeId}")
-    public ResponseEntity<Optional<FlightType>> getFlightType(@PathVariable Integer flightTypeId){
+    public ResponseEntity<FlightTypeDTO> getFlightType(@PathVariable Integer flightTypeId){
         return new ResponseEntity<>(flightTypeService.getFlightType(flightTypeId), HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<List<FlightType>> getFlightTypes(){
+    public ResponseEntity<List<FlightTypeDTO>> getFlightTypes(){
         return new ResponseEntity<>(flightTypeService.getFlightTypes(), HttpStatus.OK);
     }
 
     @PutMapping("/{flightTypeId}")
-    public ResponseEntity<FlightType> updateFlightType(@RequestBody FlightType flightType, @PathVariable Integer flightTypeId){
-        return new ResponseEntity<>(flightTypeService.updateFlightType(flightType, flightTypeId), HttpStatus.CREATED);
+    public ResponseEntity<FlightTypeDTO> updateFlightType(@RequestBody FlightTypeDTO flightTypeDTO, @PathVariable Integer flightTypeId){
+        return new ResponseEntity<>(flightTypeService.updateFlightType(flightTypeDTO, flightTypeId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{flightTypeId}")

@@ -14,44 +14,43 @@ import java.util.stream.Collectors;
 @Service
 public class AirlineService {
     private final AirlineRepository airlineRepository;
-    private final AirlineMapper mapper;
+    private final AirlineMapper airlineMapper;
 
     @Autowired
-    public AirlineService(AirlineRepository airlineRepository, AirlineMapper mapper) {
+    public AirlineService(AirlineRepository airlineRepository, AirlineMapper airlineMapper) {
         this.airlineRepository = airlineRepository;
-        this.mapper = mapper;
+        this.airlineMapper = airlineMapper;
     }
 
     public AirlineDTO saveAirline(AirlineDTO airlineDTO) {
         airlineDTO.setFlightSequence(0);
-        Airline airline = mapper.toAirline(airlineDTO);
+        Airline airline = airlineMapper.toAirline(airlineDTO);
         airlineRepository.save(airline);
-        return mapper.toDto(airline);
+        return airlineMapper.toDto(airline);
 
     }
 
-    public Optional<AirlineDTO> getAirline(Integer airlineId) {
+    public AirlineDTO getAirline(Integer airlineId) {
         Optional<Airline> airline = airlineRepository.findById(airlineId);
         if (airline.isPresent()) {
-            return Optional.of(mapper.toDto(airline.get()));
+            return airlineMapper.toDto(airline.get());
         }
         throw new RuntimeException();
     }
 
     public List<AirlineDTO> getAirlines() {
         return airlineRepository.findAll().stream()
-                .map(mapper::toDto)
+                .map(airlineMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public AirlineDTO updateAirline(AirlineDTO airlineDTO, Integer airlineId) {
-        AirlineDTO airlineToUpdate = this.getAirline(airlineId).orElse(null);
-        if (airlineToUpdate != null) {
-            Airline airline = mapper.toAirline(airlineToUpdate);
-            airline.setAirlineName(airlineDTO.getAirlineName());
-            return mapper.toDto(airlineRepository.save(airline));
-        }
-        throw new RuntimeException();
+        AirlineDTO airlineToUpdate = this.getAirline(airlineId);
+
+        Airline airline = airlineMapper.toAirline(airlineToUpdate);
+        airline.setAirlineName(airlineDTO.getAirlineName());
+        return airlineMapper.toDto(airlineRepository.save(airline));
+
     }
 
     public void updateFlightSequence(Airline airline) {
@@ -59,7 +58,7 @@ public class AirlineService {
     }
 
     public String deleteAirline(Integer airlineId) {
-        AirlineDTO airlineToDelete = this.getAirline(airlineId).orElse(null);
+        AirlineDTO airlineToDelete = this.getAirline(airlineId);
         if (airlineToDelete != null) {
             airlineRepository.deleteById(airlineId);
             return "Airline successfully eliminated";

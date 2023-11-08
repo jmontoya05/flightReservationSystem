@@ -32,7 +32,7 @@ public class AirlineController {
         return new ResponseEntity<>(airlineService.saveAirline(airlineDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{airlineId}")
-    public ResponseEntity<Optional<AirlineDTO>> getAirline(@PathVariable Integer airlineId){
+    public ResponseEntity<AirlineDTO> getAirline(@PathVariable Integer airlineId){
         return new ResponseEntity<>(airlineService.getAirline(airlineId), HttpStatus.OK);
     }
     @GetMapping
