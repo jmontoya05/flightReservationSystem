@@ -1,5 +1,6 @@
 package com.makaia.flightReservation.controller;
 
+import com.makaia.flightReservation.dto.AirlineDTO;
 import com.makaia.flightReservation.model.Airline;
 import com.makaia.flightReservation.service.AirlineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,21 @@ public class AirlineController {
     }
 
     @PostMapping
-    public ResponseEntity<Airline> saveAirline(@RequestBody Airline airline){
-        return new ResponseEntity<>(airlineService.saveAirline(airline), HttpStatus.CREATED);
+    public ResponseEntity<AirlineDTO> saveAirline(@RequestBody AirlineDTO airlineDTO){
+        return new ResponseEntity<>(airlineService.saveAirline(airlineDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{airlineId}")
-    public ResponseEntity<Optional<Airline>> getAirline(@PathVariable Integer airlineId){
+    public ResponseEntity<Optional<AirlineDTO>> getAirline(@PathVariable Integer airlineId){
         return new ResponseEntity<>(airlineService.getAirline(airlineId), HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<List<Airline>> getAirlines(){
+    public ResponseEntity<List<AirlineDTO>> getAirlines(){
         return new ResponseEntity<>(airlineService.getAirlines(), HttpStatus.OK);
     }
 
     @PutMapping("/{airlineId}")
-    public ResponseEntity<Airline> updateAirline(@RequestBody Airline airline, @PathVariable Integer airlineId){
-        return new ResponseEntity<>(airlineService.updateAirline(airline, airlineId), HttpStatus.CREATED);
+    public ResponseEntity<AirlineDTO> updateAirline(@RequestBody AirlineDTO airlineDTO, @PathVariable Integer airlineId){
+        return new ResponseEntity<>(airlineService.updateAirline(airlineDTO, airlineId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{airlineId}")

@@ -1,5 +1,7 @@
 package com.makaia.flightReservation.service;
 
+import com.makaia.flightReservation.dto.AirlineDTO;
+import com.makaia.flightReservation.mapper.AirlineMapper;
 import com.makaia.flightReservation.model.Airline;
 import com.makaia.flightReservation.model.Flight;
 import com.makaia.flightReservation.repository.FlightRepository;
@@ -13,10 +15,12 @@ import java.util.Optional;
 public class FlightService {
     private final FlightRepository flightRepository;
     private final AirlineService airlineService;
+    private final AirlineMapper airlineMapper;
     @Autowired
-    public FlightService(FlightRepository flightRepository, AirlineService airlineService) {
+    public FlightService(FlightRepository flightRepository, AirlineService airlineService, AirlineMapper airlineMapper) {
         this.flightRepository = flightRepository;
         this.airlineService = airlineService;
+        this.airlineMapper = airlineMapper;
     }
 
     public Flight saveFlight(Flight flight){
@@ -32,20 +36,15 @@ public class FlightService {
         return flightRepository.findAll();
     }
 
-
     private String generateFlightCode(Integer airlineId){
-        Optional<Airline> optionalAirline = airlineService.getAirline(airlineId);
-        Airline airline;
-        String airlineName;
-        Integer flightSequence;
+        Optional<AirlineDTO> optionalAirline = airlineService.getAirline(airlineId);
 
-        if (optionalAirline.isPresent()){
-            airline = optionalAirline.get();
-            airlineName = airline.getAirlineName();
-            flightSequence = airline.getFlightSequence();
-        } else {
+        if (optionalAirline.isEmpty()){
             throw new RuntimeException();
         }
+        Airline airline = airlineMapper.toAirline(optionalAirline.get());
+        String airlineName = airline.getAirlineName();
+        Integer flightSequence = airline.getFlightSequence();
 
         flightSequence++;
         String airlineCode = airlineName.substring(0,2).toUpperCase();
