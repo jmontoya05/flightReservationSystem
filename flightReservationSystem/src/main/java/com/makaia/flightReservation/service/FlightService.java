@@ -37,12 +37,8 @@ public class FlightService {
     }
 
     private String generateFlightCode(Integer airlineId){
-        Optional<AirlineDTO> optionalAirline = airlineService.getAirline(airlineId);
-
-        if (optionalAirline.isEmpty()){
-            throw new RuntimeException();
-        }
-        Airline airline = airlineMapper.toAirline(optionalAirline.get());
+        AirlineDTO airlineDTO = airlineService.getAirline(airlineId);
+        Airline airline = airlineMapper.toAirline(airlineDTO);
         String airlineName = airline.getAirlineName();
         Integer flightSequence = airline.getFlightSequence();
 
