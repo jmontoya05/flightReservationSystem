@@ -14,9 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "reservations")
 public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
-    private Integer reservationId;
+    @Column(name = "reservation_code", length = 10)
+    private String reservation_code;
 
     @Column(name = "flight_code", nullable = false, length = 10)
     private String flightCode;
@@ -34,8 +33,8 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Integer reservationId, String flightCode, Integer passengerId, LocalDateTime reservationDate, Flight flight, Passenger passenger) {
-        this.reservationId = reservationId;
+    public Reservation(String reservation_code, String flightCode, Integer passengerId, LocalDateTime reservationDate, Flight flight, Passenger passenger) {
+        this.reservation_code = reservation_code;
         this.flightCode = flightCode;
         this.passengerId = passengerId;
         this.reservationDate = reservationDate;
@@ -43,12 +42,12 @@ public class Reservation {
         this.passenger = passenger;
     }
 
-    public Integer getReservationId() {
-        return reservationId;
+    public String getReservation_code() {
+        return reservation_code;
     }
 
-    public void setReservationId(Integer reservationId) {
-        this.reservationId = reservationId;
+    public void setReservation_code(String reservation_code) {
+        this.reservation_code = reservation_code;
     }
 
     public String getFlightCode() {
