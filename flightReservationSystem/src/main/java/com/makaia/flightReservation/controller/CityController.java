@@ -1,5 +1,6 @@
 package com.makaia.flightReservation.controller;
 
+import com.makaia.flightReservation.dto.CityDTO;
 import com.makaia.flightReservation.model.City;
 import com.makaia.flightReservation.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +28,21 @@ public class CityController {
     }
 
     @PostMapping
-    public ResponseEntity<City> saveCity(@RequestBody City city){
-        return new ResponseEntity<>(cityService.saveCity(city), HttpStatus.CREATED);
+    public ResponseEntity<CityDTO> saveCity(@RequestBody CityDTO cityDTO){
+        return new ResponseEntity<>(cityService.saveCity(cityDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{cityId}")
-    public ResponseEntity<Optional<City>> getCity(@PathVariable Integer cityId){
+    public ResponseEntity<CityDTO> getCity(@PathVariable Integer cityId){
         return new ResponseEntity<>(cityService.getCity(cityId), HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<List<City>> getCities(){
+    public ResponseEntity<List<CityDTO>> getCities(){
         return new ResponseEntity<>(cityService.getCities(), HttpStatus.OK);
     }
 
     @PutMapping("/{cityId}")
-    public ResponseEntity<City> updateCity(@RequestBody City city, @PathVariable Integer cityId){
-        return new ResponseEntity<>(cityService.updateCity(city, cityId), HttpStatus.CREATED);
+    public ResponseEntity<CityDTO> updateCity(@RequestBody CityDTO cityDTO, @PathVariable Integer cityId){
+        return new ResponseEntity<>(cityService.updateCity(cityDTO, cityId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{cityId}")
