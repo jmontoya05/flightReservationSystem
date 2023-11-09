@@ -45,13 +45,11 @@ public class Flight {
     @ManyToOne
     @JoinColumn(name = "airport_destination_id", insertable = false, updatable = false)
     private Airport airportDestination;
-    @OneToMany(mappedBy = "flight")
-    private List<Reservation> reservations;
 
     public Flight() {
     }
 
-    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airportOriginId, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination, List<Reservation> reservations) {
+    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airportOriginId, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination) {
         this.flightCode = flightCode;
         this.airlineId = airlineId;
         this.flightTypeId = flightTypeId;
@@ -65,7 +63,6 @@ public class Flight {
         this.flightType = flightType;
         this.airportOrigin = airportOrigin;
         this.airportDestination = airportDestination;
-        this.reservations = reservations;
     }
 
     public String getFlightCode() {
@@ -170,14 +167,6 @@ public class Flight {
 
     public void setAirportDestination(Airport airportDestination) {
         this.airportDestination = airportDestination;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
     }
 }
 

@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface FlightMapper {
 
     FlightRequestDTO toRequestDto(Flight flight);
-    @Mapping(target = "reservations", ignore = true)
+
     @Mapping(target = "flightType", ignore = true)
     @Mapping(target = "airportOrigin", ignore = true)
     @Mapping(target = "airportDestination", ignore = true)

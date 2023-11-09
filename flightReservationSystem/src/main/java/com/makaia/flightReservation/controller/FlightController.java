@@ -1,10 +1,13 @@
 package com.makaia.flightReservation.controller;
 
+import com.makaia.flightReservation.dto.FlightCustomPage;
 import com.makaia.flightReservation.dto.FlightRequestDTO;
 import com.makaia.flightReservation.dto.FlightResponseDTO;
 import com.makaia.flightReservation.model.Flight;
 import com.makaia.flightReservation.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,8 +41,14 @@ public class FlightController {
         return new ResponseEntity<>(flightService.getFlight(flightCode), HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<List<FlightResponseDTO>> getFlights(){
-        return new ResponseEntity<>(flightService.getFlights(), HttpStatus.OK);
+    public ResponseEntity<FlightCustomPage> getFlights(
+            @RequestParam(required = false) Integer originId,
+            @RequestParam(required = false) Integer destinationId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate departureDate,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int pageSize)
+    {
+        return new ResponseEntity<>(flightService.getFlights(originId,destinationId, departureDate, page,pageSize), HttpStatus.OK);
     }
 
     /*@PutMapping("/{flightCode}")
