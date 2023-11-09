@@ -1,5 +1,6 @@
 package com.makaia.flightReservation.controller;
 
+import com.makaia.flightReservation.dto.CountryDTO;
 import com.makaia.flightReservation.model.Country;
 import com.makaia.flightReservation.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,21 @@ public class CountryController {
     }
 
     @PostMapping
-    public ResponseEntity<Country> saveCountry(@RequestBody Country country){
-        return new ResponseEntity<>(countryService.saveCountry(country), HttpStatus.CREATED);
+    public ResponseEntity<CountryDTO> saveCountry(@RequestBody CountryDTO countryDTO){
+        return new ResponseEntity<>(countryService.saveCountry(countryDTO), HttpStatus.CREATED);
     }
     @GetMapping("/{countryId}")
-    public ResponseEntity<Optional<Country>> getCountry(@PathVariable Integer countryId){
+    public ResponseEntity<CountryDTO> getCountry(@PathVariable Integer countryId){
         return new ResponseEntity<>(countryService.getCountry(countryId), HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<List<Country>> getCountries(){
+    public ResponseEntity<List<CountryDTO>> getCountries(){
         return new ResponseEntity<>(countryService.getCountries(), HttpStatus.OK);
     }
 
     @PutMapping("/{countryId}")
-    public ResponseEntity<Country> updateCountry(@RequestBody Country country, @PathVariable Integer countryId){
-        return new ResponseEntity<>(countryService.updateCountry(country, countryId), HttpStatus.CREATED);
+    public ResponseEntity<CountryDTO> updateCountry(@RequestBody CountryDTO countryDTO, @PathVariable Integer countryId){
+        return new ResponseEntity<>(countryService.updateCountry(countryDTO, countryId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{countryId}")
