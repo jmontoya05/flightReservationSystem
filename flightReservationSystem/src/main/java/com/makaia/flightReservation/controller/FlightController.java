@@ -1,5 +1,7 @@
 package com.makaia.flightReservation.controller;
 
+import com.makaia.flightReservation.dto.FlightRequestDTO;
+import com.makaia.flightReservation.dto.FlightResponseDTO;
 import com.makaia.flightReservation.model.Flight;
 import com.makaia.flightReservation.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +27,16 @@ public class FlightController {
     }
 
     @PostMapping
-    public ResponseEntity<Flight> saveFlight(@RequestBody Flight flight){
-        return new ResponseEntity<>(flightService.saveFlight(flight), HttpStatus.CREATED);
+    public ResponseEntity<FlightRequestDTO> saveFlight(@RequestBody FlightRequestDTO flightRequestDTO){
+        return new ResponseEntity<>(flightService.saveFlight(flightRequestDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/{flightCode}")
-    public ResponseEntity<Optional<Flight>> getFlight(@PathVariable String flightCode){
+    public ResponseEntity<FlightResponseDTO> getFlight(@PathVariable String flightCode){
         return new ResponseEntity<>(flightService.getFlight(flightCode), HttpStatus.OK);
     }
     @GetMapping
-    public ResponseEntity<List<Flight>> getFlights(){
+    public ResponseEntity<List<FlightResponseDTO>> getFlights(){
         return new ResponseEntity<>(flightService.getFlights(), HttpStatus.OK);
     }
 

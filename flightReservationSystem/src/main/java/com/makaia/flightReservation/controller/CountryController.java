@@ -1,7 +1,6 @@
 package com.makaia.flightReservation.controller;
 
 import com.makaia.flightReservation.dto.CountryDTO;
-import com.makaia.flightReservation.model.Country;
 import com.makaia.flightReservation.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/countries")
