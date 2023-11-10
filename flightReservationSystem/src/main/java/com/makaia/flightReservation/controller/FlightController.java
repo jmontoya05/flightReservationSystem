@@ -3,10 +3,8 @@ package com.makaia.flightReservation.controller;
 import com.makaia.flightReservation.dto.FlightCustomPage;
 import com.makaia.flightReservation.dto.FlightRequestDTO;
 import com.makaia.flightReservation.dto.FlightResponseDTO;
-import com.makaia.flightReservation.model.Flight;
 import com.makaia.flightReservation.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,36 +17,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @RestController
 @RequestMapping("/flights")
 public class FlightController {
     private final FlightService flightService;
+
     @Autowired
     public FlightController(FlightService flightService) {
         this.flightService = flightService;
     }
 
     @PostMapping
-    public ResponseEntity<FlightRequestDTO> saveFlight(@RequestBody FlightRequestDTO flightRequestDTO){
+    public ResponseEntity<FlightRequestDTO> saveFlight(@RequestBody FlightRequestDTO flightRequestDTO) {
         return new ResponseEntity<>(flightService.saveFlight(flightRequestDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/{flightCode}")
-    public ResponseEntity<FlightResponseDTO> getFlight(@PathVariable String flightCode){
+    public ResponseEntity<FlightResponseDTO> getFlight(@PathVariable String flightCode) {
         return new ResponseEntity<>(flightService.getFlight(flightCode), HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<FlightCustomPage> getFlights(
-            @RequestParam(required = false) Integer originId,
-            @RequestParam(required = false) Integer destinationId,
+            @RequestParam(required = false) String origin,
+            @RequestParam(required = false) String destination,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate departureDate,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int pageSize)
-    {
-        return new ResponseEntity<>(flightService.getFlights(originId,destinationId, departureDate, page,pageSize), HttpStatus.OK);
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return new ResponseEntity<>(flightService.getFlights(origin, destination, departureDate, page, pageSize), HttpStatus.OK);
     }
 
     /*@PutMapping("/{flightCode}")

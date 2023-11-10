@@ -11,23 +11,23 @@ import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, String> {
-    Page<Flight> findByAirportOriginIdAndAirportDestinationIdAndDepartureDateBetween(
-            Integer airportOriginId,
-            Integer airportDestinationId,
+    Page<Flight> findByAirportOriginIdInAndAirportDestinationIdInAndDepartureDateBetween(
+            List<Integer> airportOriginId,
+            List<Integer> airportDestinationId,
             LocalDateTime startDay,
             LocalDateTime endDay,
             Pageable pageable
     );
 
-    Page<Flight> findByAirportOriginIdAndDepartureDateBetween(
-            Integer airportOriginId,
+    Page<Flight> findByAirportOriginIdInAndDepartureDateBetween(
+            List<Integer> airportOriginId,
             LocalDateTime startDay,
             LocalDateTime endDay,
             Pageable pageable
     );
 
-    Page<Flight> findByAirportDestinationIdAndDepartureDateBetween(
-            Integer airportDestinationId,
+    Page<Flight> findByAirportDestinationIdInAndDepartureDateBetween(
+            List<Integer> airportDestinationId,
             LocalDateTime startDay,
             LocalDateTime endDay,
             Pageable pageable
@@ -39,19 +39,19 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
             Pageable pageable
     );
 
-    Page<Flight> findByAirportOriginIdAndAirportDestinationId(
-            Integer airportOriginId,
-            Integer airportDestinationId,
+    Page<Flight> findByAirportOriginIdInAndAirportDestinationIdIn(
+            List<Integer> airportOriginId,
+            List<Integer> airportDestinationId,
             Pageable pageable
     );
 
-    Page<Flight> findByAirportOriginId(
-            Integer airportOriginId,
+    Page<Flight> findByAirportOriginIdIn(
+            List<Integer> airportOriginId,
             Pageable pageable
     );
 
-    Page<Flight> findByAirportDestinationId(
-            Integer airportDestinationId,
+    Page<Flight> findByAirportDestinationIdIn(
+            List<Integer> airportDestinationId,
             Pageable pageable
     );
 }

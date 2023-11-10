@@ -8,6 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CityMapper {
     CityDTO toDto(City city);
+
+    @Mapping(target = "city", expression = "java(cityDTO.getCity().toLowerCase())")
     @Mapping(target = "country", ignore = true)
     City toCity(CityDTO cityDTO);
 }

@@ -1,6 +1,5 @@
 package com.makaia.flightReservation.dto;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public class ReservationDTO {

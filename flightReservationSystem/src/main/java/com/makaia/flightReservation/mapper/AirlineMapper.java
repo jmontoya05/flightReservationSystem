@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AirlineMapper {
     AirlineDTO toDto(Airline airline);
+
     Airline toAirline(AirlineDTO airlineDTO);
 }

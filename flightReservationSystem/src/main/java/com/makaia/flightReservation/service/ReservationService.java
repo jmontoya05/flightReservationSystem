@@ -18,7 +18,7 @@ public class ReservationService {
         this.reservationMapper = reservationMapper;
     }
 
-    public ReservationDTO saveReservation(ReservationDTO reservationDTO){
+    public ReservationDTO saveReservation(ReservationDTO reservationDTO) {
         Reservation reservation = reservationMapper.toReservation(reservationDTO);
         reservationRepository.save(reservation);
         return reservationMapper.toDto(reservation);

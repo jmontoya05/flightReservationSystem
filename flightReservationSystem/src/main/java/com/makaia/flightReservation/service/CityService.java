@@ -16,42 +16,43 @@ public class CityService {
 
     private final CityRepository cityRepository;
     private final CityMapper cityMapper;
+
     @Autowired
     public CityService(CityRepository cityRepository, CityMapper cityMapper) {
         this.cityRepository = cityRepository;
         this.cityMapper = cityMapper;
     }
 
-    public CityDTO saveCity(CityDTO cityDTO){
+    public CityDTO saveCity(CityDTO cityDTO) {
         City city = cityMapper.toCity(cityDTO);
         cityRepository.save(city);
         return cityMapper.toDto(city);
     }
 
-    public CityDTO getCity(Integer cityId){
+    public CityDTO getCity(Integer cityId) {
         Optional<City> city = cityRepository.findById(cityId);
-        if (city.isPresent()){
+        if (city.isPresent()) {
             return cityMapper.toDto(city.get());
         }
         throw new RuntimeException();
     }
 
-    public List<CityDTO> getCities(){
+    public List<CityDTO> getCities() {
         return cityRepository.findAll().stream()
                 .map(cityMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public CityDTO updateCity(CityDTO cityDTO, Integer cityId){
+    public CityDTO updateCity(CityDTO cityDTO, Integer cityId) {
         CityDTO cityToUpdate = this.getCity(cityId);
         City city = cityMapper.toCity(cityToUpdate);
         city.setCity(cityDTO.getCity());
         return cityMapper.toDto(cityRepository.save(city));
     }
 
-    public String deleteCity(Integer cityId){
+    public String deleteCity(Integer cityId) {
         CityDTO cityToDelete = this.getCity(cityId);
-        if (cityToDelete != null){
+        if (cityToDelete != null) {
             cityRepository.deleteById(cityId);
             return "City successfully eliminated";
         }

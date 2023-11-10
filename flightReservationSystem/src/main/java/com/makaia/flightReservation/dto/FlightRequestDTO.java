@@ -1,6 +1,5 @@
 package com.makaia.flightReservation.dto;
 
-import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

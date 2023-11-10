@@ -20,31 +20,34 @@ import java.util.List;
 @RequestMapping("/airlines")
 public class AirlineController {
     private final AirlineService airlineService;
+
     @Autowired
     public AirlineController(AirlineService airlineService) {
         this.airlineService = airlineService;
     }
 
     @PostMapping
-    public ResponseEntity<AirlineDTO> saveAirline(@RequestBody AirlineDTO airlineDTO){
+    public ResponseEntity<AirlineDTO> saveAirline(@RequestBody AirlineDTO airlineDTO) {
         return new ResponseEntity<>(airlineService.saveAirline(airlineDTO), HttpStatus.CREATED);
     }
+
     @GetMapping("/{airlineId}")
-    public ResponseEntity<AirlineDTO> getAirline(@PathVariable Integer airlineId){
+    public ResponseEntity<AirlineDTO> getAirline(@PathVariable Integer airlineId) {
         return new ResponseEntity<>(airlineService.getAirline(airlineId), HttpStatus.OK);
     }
+
     @GetMapping
-    public ResponseEntity<List<AirlineDTO>> getAirlines(){
+    public ResponseEntity<List<AirlineDTO>> getAirlines() {
         return new ResponseEntity<>(airlineService.getAirlines(), HttpStatus.OK);
     }
 
     @PutMapping("/{airlineId}")
-    public ResponseEntity<AirlineDTO> updateAirline(@RequestBody AirlineDTO airlineDTO, @PathVariable Integer airlineId){
+    public ResponseEntity<AirlineDTO> updateAirline(@RequestBody AirlineDTO airlineDTO, @PathVariable Integer airlineId) {
         return new ResponseEntity<>(airlineService.updateAirline(airlineDTO, airlineId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{airlineId}")
-    public ResponseEntity<String> deleteAirline(@PathVariable Integer airlineId){
+    public ResponseEntity<String> deleteAirline(@PathVariable Integer airlineId) {
         return new ResponseEntity<>(airlineService.deleteAirline(airlineId), HttpStatus.NO_CONTENT);
     }
 }

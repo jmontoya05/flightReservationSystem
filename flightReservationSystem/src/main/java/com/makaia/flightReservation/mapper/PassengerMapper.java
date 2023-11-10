@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PassengerMapper {
     PassengerDTO toDto(Passenger passenger);
+
     @Mapping(target = "reservations", ignore = true)
     Passenger toPassenger(PassengerDTO passengerDTO);
 }

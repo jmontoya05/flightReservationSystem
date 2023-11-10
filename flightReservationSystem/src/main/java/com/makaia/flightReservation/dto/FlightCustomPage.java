@@ -1,7 +1,5 @@
 package com.makaia.flightReservation.dto;
 
-import com.makaia.flightReservation.model.Flight;
-
 import java.util.List;
 
 public class FlightCustomPage {

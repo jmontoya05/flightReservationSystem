@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/reservations")
 public class ReservationController {
     private final ReservationService reservationService;
+
     @Autowired
     public ReservationController(ReservationService reservationService) {
         this.reservationService = reservationService;
     }
 
     @PostMapping
-    public ReservationDTO saveReservation(@RequestBody ReservationDTO reservationDTO){
+    public ReservationDTO saveReservation(@RequestBody ReservationDTO reservationDTO) {
         return reservationService.saveReservation(reservationDTO);
     }
 }

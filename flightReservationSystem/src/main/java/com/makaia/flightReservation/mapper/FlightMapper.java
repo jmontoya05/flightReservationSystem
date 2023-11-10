@@ -20,5 +20,4 @@ public interface FlightMapper {
     FlightResponseDTO toResponseDto(Flight flight);
 
 
-
 }

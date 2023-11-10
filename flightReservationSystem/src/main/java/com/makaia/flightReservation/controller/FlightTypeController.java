@@ -20,31 +20,34 @@ import java.util.List;
 @RequestMapping("/flight-types")
 public class FlightTypeController {
     private final FlightTypeService flightTypeService;
+
     @Autowired
     public FlightTypeController(FlightTypeService flightTypeService) {
         this.flightTypeService = flightTypeService;
     }
 
     @PostMapping
-    public ResponseEntity<FlightTypeDTO> saveFlightType(@RequestBody FlightTypeDTO flightTypeDTO){
+    public ResponseEntity<FlightTypeDTO> saveFlightType(@RequestBody FlightTypeDTO flightTypeDTO) {
         return new ResponseEntity<>(flightTypeService.saveFlightType(flightTypeDTO), HttpStatus.CREATED);
     }
+
     @GetMapping("/{flightTypeId}")
-    public ResponseEntity<FlightTypeDTO> getFlightType(@PathVariable Integer flightTypeId){
+    public ResponseEntity<FlightTypeDTO> getFlightType(@PathVariable Integer flightTypeId) {
         return new ResponseEntity<>(flightTypeService.getFlightType(flightTypeId), HttpStatus.OK);
     }
+
     @GetMapping
-    public ResponseEntity<List<FlightTypeDTO>> getFlightTypes(){
+    public ResponseEntity<List<FlightTypeDTO>> getFlightTypes() {
         return new ResponseEntity<>(flightTypeService.getFlightTypes(), HttpStatus.OK);
     }
 
     @PutMapping("/{flightTypeId}")
-    public ResponseEntity<FlightTypeDTO> updateFlightType(@RequestBody FlightTypeDTO flightTypeDTO, @PathVariable Integer flightTypeId){
+    public ResponseEntity<FlightTypeDTO> updateFlightType(@RequestBody FlightTypeDTO flightTypeDTO, @PathVariable Integer flightTypeId) {
         return new ResponseEntity<>(flightTypeService.updateFlightType(flightTypeDTO, flightTypeId), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{flightTypeId}")
-    public ResponseEntity<String> deleteFlightType(@PathVariable Integer flightTypeId){
+    public ResponseEntity<String> deleteFlightType(@PathVariable Integer flightTypeId) {
         return new ResponseEntity<>(flightTypeService.deleteFlightType(flightTypeId), HttpStatus.NO_CONTENT);
     }
 }

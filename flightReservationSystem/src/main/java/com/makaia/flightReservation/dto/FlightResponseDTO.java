@@ -1,10 +1,7 @@
 package com.makaia.flightReservation.dto;
 
-import com.makaia.flightReservation.model.Reservation;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class FlightResponseDTO {
     private String flightCode;
@@ -89,4 +86,4 @@ public class FlightResponseDTO {
         this.availableSeats = availableSeats;
     }
 
-    }
+}
