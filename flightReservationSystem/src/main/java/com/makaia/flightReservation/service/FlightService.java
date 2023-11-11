@@ -48,6 +48,7 @@ public class FlightService {
     public FlightRequestDTO saveFlight(FlightRequestDTO flightRequestDTO) {
         Flight flight = flightMapper.toFlight(flightRequestDTO);
         flight.setFlightCode(generateFlightCode(flight.getAirlineId()));
+        flight.setReservationsCount(0);
         flightRepository.save(flight);
         return flightMapper.toRequestDto(flight);
     }
@@ -58,6 +59,10 @@ public class FlightService {
             return flightMapper.toResponseDto(flight.get());
         }
         throw new RuntimeException();
+    }
+
+    public Optional<Flight> getFlightByCode(String flightCode){
+        return flightRepository.findById(flightCode);
     }
 
     public FlightCustomPage getFlights(String cityOrigin, String cityDestination, LocalDate departureDate, int page, int pageSize) {
@@ -72,6 +77,34 @@ public class FlightService {
                 .collect(Collectors.toList());
 
         return new FlightCustomPage(flights.getNumber() + 1, flights.getSize(), flights.getNumberOfElements(), flights.getTotalElements(), flightsDto);
+    }
+
+    public FlightRequestDTO updateFlight(FlightRequestDTO flightRequestDTO, String flightCode){
+        FlightResponseDTO flightToUpdate = this.getFlight(flightCode);
+        Flight flight = flightMapper.responseToFlight(flightToUpdate);
+        flight.setAirlineId(flightRequestDTO.getAirlineId());
+        flight.setFlightTypeId(flightRequestDTO.getFlightTypeId());
+        flight.setAirportOriginId(flightRequestDTO.getAirportOriginId());
+        flight.setAirportDestinationId(flightRequestDTO.getAirportDestinationId());
+        flight.setDepartureDate(flightRequestDTO.getDepartureDate());
+        flight.setArrivalDate(flightRequestDTO.getArrivalDate());
+        flight.setPrice(flightRequestDTO.getPrice());
+        flight.setAvailableSeats(flightRequestDTO.getAvailableSeats());
+
+        return flightMapper.toRequestDto(flightRepository.save(flight));
+    }
+
+    public void updateReservationCount(Flight flight) {
+        flightRepository.save(flight);
+    }
+
+    public boolean deleteFlight(String flightCode){
+        FlightResponseDTO flightToDelete = this.getFlight(flightCode);
+        if (flightToDelete != null){
+            flightRepository.deleteById(flightCode);
+            return true;
+        }
+        return false;
     }
 
     private String generateFlightCode(Integer airlineId) {

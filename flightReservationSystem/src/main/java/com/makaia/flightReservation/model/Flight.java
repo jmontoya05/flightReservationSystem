@@ -31,6 +31,8 @@ public class Flight {
     private BigDecimal price;
     @Column(name = "available_seats", nullable = false)
     private Integer availableSeats;
+    @Column(name = "reservations_count", nullable = false)
+    private Integer reservationsCount;
     @ManyToOne
     @JoinColumn(name = "airline_id", insertable = false, updatable = false)
     private Airline airline;
@@ -47,7 +49,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airportOriginId, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination) {
+    public Flight(String flightCode, Integer airlineId, Integer flightTypeId, Integer airportOriginId, Integer airportDestinationId, LocalDateTime departureDate, LocalDateTime arrivalDate, BigDecimal price, Integer availableSeats, Integer reservationsCount, Airline airline, FlightType flightType, Airport airportOrigin, Airport airportDestination) {
         this.flightCode = flightCode;
         this.airlineId = airlineId;
         this.flightTypeId = flightTypeId;
@@ -57,6 +59,7 @@ public class Flight {
         this.arrivalDate = arrivalDate;
         this.price = price;
         this.availableSeats = availableSeats;
+        this.reservationsCount = reservationsCount;
         this.airline = airline;
         this.flightType = flightType;
         this.airportOrigin = airportOrigin;
@@ -165,6 +168,14 @@ public class Flight {
 
     public void setAirportDestination(Airport airportDestination) {
         this.airportDestination = airportDestination;
+    }
+
+    public Integer getReservationsCount() {
+        return reservationsCount;
+    }
+
+    public void setReservationsCount(Integer reservationsCount) {
+        this.reservationsCount = reservationsCount;
     }
 }
 

@@ -38,7 +38,7 @@ public class AirlineController {
 
     @GetMapping
     public ResponseEntity<List<AirlineDTO>> getAirlines() {
-        return new ResponseEntity<>(airlineService.getAirlines(), HttpStatus.OK);
+        return new ResponseEntity<>(airlineService.getAllAirlines(), HttpStatus.OK);
     }
 
     @PutMapping("/{airlineId}")

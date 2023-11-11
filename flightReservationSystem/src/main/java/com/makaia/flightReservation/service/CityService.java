@@ -1,6 +1,7 @@
 package com.makaia.flightReservation.service;
 
 import com.makaia.flightReservation.dto.CityDTO;
+import com.makaia.flightReservation.exception.BadRequestsException;
 import com.makaia.flightReservation.mapper.CityMapper;
 import com.makaia.flightReservation.model.City;
 import com.makaia.flightReservation.repository.CityRepository;
@@ -34,7 +35,7 @@ public class CityService {
         if (city.isPresent()) {
             return cityMapper.toDto(city.get());
         }
-        throw new RuntimeException();
+        throw new BadRequestsException("City not found");
     }
 
     public List<CityDTO> getCities() {

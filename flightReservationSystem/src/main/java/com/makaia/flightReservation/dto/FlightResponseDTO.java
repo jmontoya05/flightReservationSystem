@@ -13,6 +13,7 @@ public class FlightResponseDTO {
     private LocalDateTime arrivalDate;
     private BigDecimal price;
     private Integer availableSeats;
+    private Integer reservationsCount;
 
     public String getFlightCode() {
         return flightCode;
@@ -86,4 +87,11 @@ public class FlightResponseDTO {
         this.availableSeats = availableSeats;
     }
 
+    public Integer getReservationsCount() {
+        return reservationsCount;
+    }
+
+    public void setReservationsCount(Integer reservationsCount) {
+        this.reservationsCount = reservationsCount;
+    }
 }

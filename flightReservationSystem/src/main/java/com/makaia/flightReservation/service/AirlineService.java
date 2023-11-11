@@ -1,6 +1,8 @@
 package com.makaia.flightReservation.service;
 
 import com.makaia.flightReservation.dto.AirlineDTO;
+import com.makaia.flightReservation.exception.BadRequestsException;
+import com.makaia.flightReservation.exception.InternalServerErrorException;
 import com.makaia.flightReservation.mapper.AirlineMapper;
 import com.makaia.flightReservation.model.Airline;
 import com.makaia.flightReservation.repository.AirlineRepository;
@@ -8,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,34 +24,39 @@ public class AirlineService {
     }
 
     public AirlineDTO saveAirline(AirlineDTO airlineDTO) {
-        airlineDTO.setFlightSequence(0);
-        Airline airline = airlineMapper.toAirline(airlineDTO);
-        airlineRepository.save(airline);
-        return airlineMapper.toDto(airline);
-
+        try {
+            airlineDTO.setFlightSequence(0);
+            Airline airline = airlineMapper.toAirline(airlineDTO);
+            airlineRepository.save(airline);
+            return airlineMapper.toDto(airline);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while saving airline: " + e.getMessage());
+        }
     }
 
     public AirlineDTO getAirline(Integer airlineId) {
-        Optional<Airline> airline = airlineRepository.findById(airlineId);
-        if (airline.isPresent()) {
-            return airlineMapper.toDto(airline.get());
-        }
-        throw new RuntimeException();
+        return airlineRepository.findById(airlineId)
+                .map(airlineMapper::toDto)
+                .orElseThrow(() -> new BadRequestsException("Airline not found with ID: " + airlineId));
     }
 
-    public List<AirlineDTO> getAirlines() {
-        return airlineRepository.findAll().stream()
-                .map(airlineMapper::toDto)
-                .collect(Collectors.toList());
+    public List<AirlineDTO> getAllAirlines() {
+        try {
+            return airlineRepository.findAll().stream()
+                    .map(airlineMapper::toDto)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while saving airline: " + e.getMessage());
+        }
     }
 
     public AirlineDTO updateAirline(AirlineDTO airlineDTO, Integer airlineId) {
-        AirlineDTO airlineToUpdate = this.getAirline(airlineId);
+        Airline airline = airlineRepository.findById(airlineId)
+                .orElseThrow(() -> new BadRequestsException("Airline not found with ID: " + airlineId));
 
-        Airline airline = airlineMapper.toAirline(airlineToUpdate);
         airline.setAirlineName(airlineDTO.getAirlineName());
-        return airlineMapper.toDto(airlineRepository.save(airline));
 
+        return airlineMapper.toDto(airlineRepository.save(airline));
     }
 
     public void updateFlightSequence(Airline airline) {
@@ -58,11 +64,10 @@ public class AirlineService {
     }
 
     public String deleteAirline(Integer airlineId) {
-        AirlineDTO airlineToDelete = this.getAirline(airlineId);
-        if (airlineToDelete != null) {
-            airlineRepository.deleteById(airlineId);
-            return "Airline successfully eliminated";
+        if (!airlineRepository.existsById(airlineId)) {
+            throw new BadRequestsException("Airline not found with ID: " + airlineId);
         }
-        throw new RuntimeException();
+        airlineRepository.deleteById(airlineId);
+        return "Airline successfully eliminated";
     }
 }

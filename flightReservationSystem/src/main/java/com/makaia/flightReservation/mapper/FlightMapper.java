@@ -11,6 +11,7 @@ public interface FlightMapper {
 
     FlightRequestDTO toRequestDto(Flight flight);
 
+    @Mapping(target = "reservationsCount", ignore = true)
     @Mapping(target = "flightType", ignore = true)
     @Mapping(target = "airportOrigin", ignore = true)
     @Mapping(target = "airportDestination", ignore = true)
@@ -19,5 +20,10 @@ public interface FlightMapper {
 
     FlightResponseDTO toResponseDto(Flight flight);
 
+    @Mapping(target = "flightTypeId", ignore = true)
+    @Mapping(target = "airportOriginId", ignore = true)
+    @Mapping(target = "airportDestinationId", ignore = true)
+    @Mapping(target = "airlineId", ignore = true)
+    Flight responseToFlight(FlightResponseDTO flightResponseDTO);
 
 }

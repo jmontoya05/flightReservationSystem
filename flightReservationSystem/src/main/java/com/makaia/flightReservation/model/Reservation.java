@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "reservations")
 public class Reservation {
     @Id
-    @Column(name = "reservation_code", length = 10)
+    @Column(name = "reservation_code", length = 14)
     private String reservation_code;
 
     @Column(name = "flight_code", nullable = false, length = 10)
@@ -40,11 +40,11 @@ public class Reservation {
         this.passenger = passenger;
     }
 
-    public String getReservation_code() {
+    public String getReservationCode() {
         return reservation_code;
     }
 
-    public void setReservation_code(String reservation_code) {
+    public void setReservationCode(String reservation_code) {
         this.reservation_code = reservation_code;
     }
 

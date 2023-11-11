@@ -3,17 +3,17 @@ package com.makaia.flightReservation.dto;
 import java.time.LocalDateTime;
 
 public class ReservationDTO {
-    private String reservation_code;
+    private String reservationCode;
     private String flightCode;
     private Integer passengerId;
     private LocalDateTime reservationDate;
 
-    public String getReservation_code() {
-        return reservation_code;
+    public String getReservationCode() {
+        return reservationCode;
     }
 
-    public void setReservation_code(String reservation_code) {
-        this.reservation_code = reservation_code;
+    public void setReservationCode(String reservationCode) {
+        this.reservationCode = reservationCode;
     }
 
     public String getFlightCode() {

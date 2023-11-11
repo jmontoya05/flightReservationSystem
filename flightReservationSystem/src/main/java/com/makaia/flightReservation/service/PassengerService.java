@@ -4,12 +4,20 @@ import com.makaia.flightReservation.dto.PassengerDTO;
 import com.makaia.flightReservation.mapper.PassengerMapper;
 import com.makaia.flightReservation.model.Passenger;
 import com.makaia.flightReservation.repository.PassengerRepository;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.PropertyDescriptor;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static com.makaia.flightReservation.util.UpdateObjectProperties.getNullPropertyNames;
 
 @Service
 public class PassengerService {
@@ -46,14 +54,7 @@ public class PassengerService {
         PassengerDTO passengerToUpdate = this.getPassenger(passengerId);
         Passenger passenger = passengerMapper.toPassenger(passengerToUpdate);
 
-        passenger.setFirstName(passengerDTO.getFirstName());
-        passenger.setLastName(passengerDTO.getLastName());
-        passenger.setPassport(passengerDTO.getPassport());
-        passenger.setNationality(passengerDTO.getNationality());
-        passenger.setEmail(passengerDTO.getEmail());
-        passenger.setPhoneNumber(passengerDTO.getPhoneNumber());
-        passenger.setEmergencyContact(passengerDTO.getEmergencyContact());
-        passenger.setContactPhoneNumber(passengerDTO.getContactPhoneNumber());
+        BeanUtils.copyProperties(passengerDTO, passenger, getNullPropertyNames(passengerDTO));
 
         return passengerMapper.toDto(passengerRepository.save(passenger));
     }
@@ -66,4 +67,6 @@ public class PassengerService {
         }
         throw new RuntimeException();
     }
+
+
 }
