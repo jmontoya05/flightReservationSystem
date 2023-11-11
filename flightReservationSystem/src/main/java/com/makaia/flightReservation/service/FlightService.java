@@ -101,8 +101,8 @@ public class FlightService {
     public FlightRequestDTO updateFlight(FlightRequestDTO flightRequestDTO, String flightCode) {
 
         validateIdsExistence(flightRequestDTO.getFlightTypeId(), flightRequestDTO.getAirportOriginId(), flightRequestDTO.getAirportDestinationId());
-        FlightResponseDTO flightToUpdate = this.getFlight(flightCode);
-        Flight flight = flightMapper.responseToFlight(flightToUpdate);
+        Flight flight = flightRepository.findById(flightCode)
+                .orElseThrow(() -> new NotFoundException("Flight not found with ID: " + flightCode));
 
         updateFlightProperties(flight, flightRequestDTO);
         validateDates(flight.getDepartureDate(), flight.getArrivalDate());

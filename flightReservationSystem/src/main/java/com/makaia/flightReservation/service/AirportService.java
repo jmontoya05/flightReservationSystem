@@ -26,8 +26,7 @@ public class AirportService {
     public AirportDTO saveAirport(AirportDTO airportDTO) {
         try {
             Airport airport = airportMapper.toAirport(airportDTO);
-            airportRepository.save(airport);
-            return airportMapper.toDto(airport);
+            return airportMapper.toDto(airportRepository.save(airport));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving airport: " + e.getMessage());
         }
@@ -51,7 +50,7 @@ public class AirportService {
 
     public AirportDTO updateAirport(AirportDTO airportDTO, Integer airportId) {
         Airport airport = airportRepository.findById(airportId)
-                .orElseThrow(() -> new NotFoundException("Airline not found with ID: " + airportId));
+                .orElseThrow(() -> new NotFoundException("Airport not found with ID: " + airportId));
         try {
             airport.setAirportName(airportDTO.getAirportName());
             return airportMapper.toDto(airportRepository.save(airport));

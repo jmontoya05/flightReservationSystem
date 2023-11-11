@@ -50,7 +50,7 @@ public class FlightTypeService {
 
     public FlightTypeDTO updateFlightType(FlightTypeDTO flightTypeDTO, Integer flightTypeId) {
         FlightType flightType = flightTypeRepository.findById(flightTypeId)
-                .orElseThrow(() -> new NotFoundException("Airline not found with ID: " + flightTypeId));
+                .orElseThrow(() -> new NotFoundException("Flight type not found with ID: " + flightTypeId));
         try {
             flightType.setFlightType(flightTypeDTO.getFlightType());
             return flightTypeMapper.toDto(flightTypeRepository.save(flightType));

@@ -177,7 +177,7 @@ public class CountryServiceTest {
     }
 
     @Test
-    void deleteCountry_ExistingCountryId_ShouldDeleteCountry() {
+    void deleteCountry() {
         // Arrange
         int existingCountryId = 1;
 
@@ -191,7 +191,7 @@ public class CountryServiceTest {
     }
 
     @Test
-    void deleteCountry_NonExistingCountryId_ShouldThrowNotFoundException() {
+    void deleteCountryWhenNonExistingCountryId() {
         // Arrange
         int nonExistingCountryId = 999;
 

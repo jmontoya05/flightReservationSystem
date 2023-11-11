@@ -27,8 +27,7 @@ public class CityService {
     public CityDTO saveCity(CityDTO cityDTO) {
         try {
             City city = cityMapper.toCity(cityDTO);
-            cityRepository.save(city);
-            return cityMapper.toDto(city);
+            return cityMapper.toDto(cityRepository.save(city));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving city: " + e.getMessage());
         }
@@ -51,8 +50,8 @@ public class CityService {
     }
 
     public CityDTO updateCity(CityDTO cityDTO, Integer cityId) {
-        CityDTO cityToUpdate = this.getCity(cityId);
-        City city = cityMapper.toCity(cityToUpdate);
+        City city = cityRepository.findById(cityId)
+                .orElseThrow(() -> new NotFoundException("City not found with ID: " + cityId));
         try {
             city.setCity(cityDTO.getCity());
             return cityMapper.toDto(cityRepository.save(city));

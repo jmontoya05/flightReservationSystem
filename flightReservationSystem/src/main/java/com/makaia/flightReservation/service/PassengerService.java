@@ -32,8 +32,7 @@ public class PassengerService {
     public PassengerDTO savePassenger(PassengerDTO passengerDTO) {
         try {
             Passenger passenger = passengerMapper.toPassenger(passengerDTO);
-            passengerRepository.save(passenger);
-            return passengerMapper.toDto(passenger);
+            return passengerMapper.toDto(passengerRepository.save(passenger));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving passenger: " + e.getMessage());
         }
@@ -56,9 +55,9 @@ public class PassengerService {
     }
 
     public PassengerDTO updatePassenger(PassengerDTO passengerDTO, Integer passengerId) {
+        Passenger passenger = passengerRepository.findById(passengerId)
+                .orElseThrow(() -> new NotFoundException("Passenger not found with ID: " + passengerId));
         try {
-            PassengerDTO passengerToUpdate = this.getPassenger(passengerId);
-            Passenger passenger = passengerMapper.toPassenger(passengerToUpdate);
             BeanUtils.copyProperties(passengerDTO, passenger, getNullPropertyNames(passengerDTO));
             return passengerMapper.toDto(passengerRepository.save(passenger));
         } catch (Exception e) {

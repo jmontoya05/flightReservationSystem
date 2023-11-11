@@ -50,7 +50,7 @@ public class CountryService {
 
     public CountryDTO updateCountry(CountryDTO countryDTO, Integer countryId) {
         Country country = countryRepository.findById(countryId)
-                .orElseThrow(() -> new NotFoundException("Airline not found with ID: " + countryId));
+                .orElseThrow(() -> new NotFoundException("Country not found with ID: " + countryId));
         try {
             country.setCountry(countryDTO.getCountry());
             return countryMapper.toDto(countryRepository.save(country));

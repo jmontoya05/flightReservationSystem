@@ -66,7 +66,6 @@ public class FlightTypeServiceTest {
     }
 
 
-
     @Test
     void getFlightType() {
         // Arrange
