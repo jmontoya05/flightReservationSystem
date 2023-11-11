@@ -38,8 +38,8 @@ public class CityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CityDTO>> getCities() {
-        return new ResponseEntity<>(cityService.getCities(), HttpStatus.OK);
+    public ResponseEntity<List<CityDTO>> getAllCities() {
+        return new ResponseEntity<>(cityService.getAllCities(), HttpStatus.OK);
     }
 
     @PutMapping("/{cityId}")

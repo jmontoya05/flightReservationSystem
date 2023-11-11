@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,8 +38,8 @@ public class PassengerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PassengerDTO>> getPassengers() {
-        return new ResponseEntity<>(passengerService.getPassengers(), HttpStatus.OK);
+    public ResponseEntity<List<PassengerDTO>> getAllPassengers() {
+        return new ResponseEntity<>(passengerService.getAllPassengers(), HttpStatus.OK);
     }
 
     @PutMapping("/{passengerId}")
@@ -47,7 +48,8 @@ public class PassengerController {
     }
 
     @DeleteMapping("/{passengerId}")
-    public ResponseEntity<String> deletePassenger(@PathVariable Integer passengerId) {
-        return new ResponseEntity<>(passengerService.deletePassenger(passengerId), HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePassenger(@PathVariable Integer passengerId) {
+        passengerService.deletePassenger(passengerId);
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,23 +32,24 @@ public class ReservationController {
     }
 
     @GetMapping("/{reservationCode}")
-    public ResponseEntity<ReservationDTO> getReservation(@PathVariable String reservationCode){
+    public ResponseEntity<ReservationDTO> getReservation(@PathVariable String reservationCode) {
         return new ResponseEntity<>(reservationService.getReservation(reservationCode), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<ReservationDTO>> getReservations(){
-        return new ResponseEntity<>(reservationService.getReservations(), HttpStatus.OK);
+    public ResponseEntity<List<ReservationDTO>> getAllReservations() {
+        return new ResponseEntity<>(reservationService.getAllReservations(), HttpStatus.OK);
     }
 
-    @PutMapping("/{reservationCode}")
-    public ResponseEntity<ReservationDTO> updateReservation(@RequestBody ReservationDTO reservationDTO, @PathVariable String reservationCode){
-        return new ResponseEntity<>(reservationService.updateReservation(reservationDTO, reservationCode), HttpStatus.CREATED);
+    @GetMapping("/passenger/{passengerId}")
+    public ResponseEntity<List<ReservationDTO>> getReservationsByPassengerId(@PathVariable Integer passengerId) {
+        return new ResponseEntity<>(reservationService.getReservationsByPassengerId(passengerId), HttpStatus.OK);
     }
 
     @DeleteMapping("/{reservationCode}")
-    public ResponseEntity<Boolean> deleteReservation(@PathVariable String reservationCode){
-        return new ResponseEntity<>(reservationService.deleteReservation(reservationCode), HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteReservation(@PathVariable String reservationCode) {
+        reservationService.deleteReservation(reservationCode);
     }
 
 }

@@ -39,7 +39,7 @@ public class AirportService {
                 .orElseThrow(() -> new NotFoundException("Airport not found with ID: " + airportId));
     }
 
-    public List<AirportDTO> getAirports() {
+    public List<AirportDTO> getAllAirports() {
         try {
             return airportRepository.findAll().stream()
                     .map(airportMapper::toDto)
@@ -52,14 +52,22 @@ public class AirportService {
     public AirportDTO updateAirport(AirportDTO airportDTO, Integer airportId) {
         AirportDTO airportToUpdate = this.getAirport(airportId);
         Airport airport = airportMapper.toAirport(airportToUpdate);
-        airport.setAirportName(airportDTO.getAirportName());
-        return airportMapper.toDto(airportRepository.save(airport));
+        try {
+            airport.setAirportName(airportDTO.getAirportName());
+            return airportMapper.toDto(airportRepository.save(airport));
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while updating airport: " + e.getMessage());
+        }
     }
 
     public void deleteAirport(Integer airportId) {
         if (!airportRepository.existsById(airportId)) {
             throw new NotFoundException("Airport not found with ID: " + airportId);
         }
-        airportRepository.deleteById(airportId);
+        try {
+            airportRepository.deleteById(airportId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while deleting airport: " + e.getMessage());
+        }
     }
 }

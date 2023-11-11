@@ -40,7 +40,7 @@ public class CityService {
                 .orElseThrow(() -> new NotFoundException("City not found with ID: " + cityId));
     }
 
-    public List<CityDTO> getCities() {
+    public List<CityDTO> getAllCities() {
         try {
             return cityRepository.findAll().stream()
                     .map(cityMapper::toDto)
@@ -53,14 +53,22 @@ public class CityService {
     public CityDTO updateCity(CityDTO cityDTO, Integer cityId) {
         CityDTO cityToUpdate = this.getCity(cityId);
         City city = cityMapper.toCity(cityToUpdate);
-        city.setCity(cityDTO.getCity());
-        return cityMapper.toDto(cityRepository.save(city));
+        try {
+            city.setCity(cityDTO.getCity());
+            return cityMapper.toDto(cityRepository.save(city));
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while updating city: " + e.getMessage());
+        }
     }
 
     public void deleteCity(Integer cityId) {
-        if (!cityRepository.existsById(cityId)){
-            throw new NotFoundException("Airport not found with ID: " + cityId);
+        if (!cityRepository.existsById(cityId)) {
+            throw new NotFoundException("City not found with ID: " + cityId);
         }
-        cityRepository.deleteById(cityId);
+        try {
+            cityRepository.deleteById(cityId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while deleting city: " + e.getMessage());
+        }
     }
 }

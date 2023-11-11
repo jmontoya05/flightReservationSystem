@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -38,8 +39,8 @@ public class CountryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CountryDTO>> getCountries() {
-        return new ResponseEntity<>(countryService.getCountries(), HttpStatus.OK);
+    public ResponseEntity<List<CountryDTO>> getAllCountries() {
+        return new ResponseEntity<>(countryService.getAllCountries(), HttpStatus.OK);
     }
 
     @PutMapping("/{countryId}")
@@ -48,8 +49,9 @@ public class CountryController {
     }
 
     @DeleteMapping("/{countryId}")
-    public ResponseEntity<String> deleteCountry(@PathVariable Integer countryId) {
-        return new ResponseEntity<>(countryService.deleteCountry(countryId), HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCountry(@PathVariable Integer countryId) {
+        countryService.deleteCountry(countryId);
     }
 
 }

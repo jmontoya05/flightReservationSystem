@@ -1,6 +1,8 @@
 package com.makaia.flightReservation.service;
 
 import com.makaia.flightReservation.dto.PassengerDTO;
+import com.makaia.flightReservation.exception.InternalServerErrorException;
+import com.makaia.flightReservation.exception.NotFoundException;
 import com.makaia.flightReservation.mapper.PassengerMapper;
 import com.makaia.flightReservation.model.Passenger;
 import com.makaia.flightReservation.repository.PassengerRepository;
@@ -13,11 +15,8 @@ import org.springframework.stereotype.Service;
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static com.makaia.flightReservation.util.UpdateObjectProperties.getNullPropertyNames;
 
 @Service
 public class PassengerService {
@@ -31,42 +30,65 @@ public class PassengerService {
     }
 
     public PassengerDTO savePassenger(PassengerDTO passengerDTO) {
-        Passenger passenger = passengerMapper.toPassenger(passengerDTO);
-        passengerRepository.save(passenger);
-        return passengerMapper.toDto(passenger);
+        try {
+            Passenger passenger = passengerMapper.toPassenger(passengerDTO);
+            passengerRepository.save(passenger);
+            return passengerMapper.toDto(passenger);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while saving passenger: " + e.getMessage());
+        }
     }
 
     public PassengerDTO getPassenger(Integer passengerId) {
-        Optional<Passenger> passenger = passengerRepository.findById(passengerId);
-        if (passenger.isPresent()) {
-            return passengerMapper.toDto(passenger.get());
-        }
-        throw new RuntimeException();
+        return passengerRepository.findById(passengerId)
+                .map(passengerMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Passenger not found with ID: " + passengerId));
     }
 
-    public List<PassengerDTO> getPassengers() {
-        return passengerRepository.findAll().stream()
-                .map(passengerMapper::toDto)
-                .collect(Collectors.toList());
+    public List<PassengerDTO> getAllPassengers() {
+        try {
+            return passengerRepository.findAll().stream()
+                    .map(passengerMapper::toDto)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while searching for all passengers: " + e.getMessage());
+        }
     }
 
     public PassengerDTO updatePassenger(PassengerDTO passengerDTO, Integer passengerId) {
-        PassengerDTO passengerToUpdate = this.getPassenger(passengerId);
-        Passenger passenger = passengerMapper.toPassenger(passengerToUpdate);
-
-        BeanUtils.copyProperties(passengerDTO, passenger, getNullPropertyNames(passengerDTO));
-
-        return passengerMapper.toDto(passengerRepository.save(passenger));
-    }
-
-    public String deletePassenger(Integer passengerId) {
-        PassengerDTO PassengerToDelete = this.getPassenger(passengerId);
-        if (PassengerToDelete != null) {
-            passengerRepository.deleteById(passengerId);
-            return "Passenger successfully eliminated";
+        try {
+            PassengerDTO passengerToUpdate = this.getPassenger(passengerId);
+            Passenger passenger = passengerMapper.toPassenger(passengerToUpdate);
+            BeanUtils.copyProperties(passengerDTO, passenger, getNullPropertyNames(passengerDTO));
+            return passengerMapper.toDto(passengerRepository.save(passenger));
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while updating the passenger: " + e.getMessage());
         }
-        throw new RuntimeException();
     }
 
+    public void deletePassenger(Integer passengerId) {
+        if (!passengerRepository.existsById(passengerId)) {
+            throw new NotFoundException("Passenger not found with ID: " + passengerId);
+        }
+        try {
+            passengerRepository.deleteById(passengerId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while deleting passenger: " + e.getMessage());
+        }
+    }
 
+    private String[] getNullPropertyNames(Object object) {
+        BeanWrapper src = new BeanWrapperImpl(object);
+        PropertyDescriptor[] pds = src.getPropertyDescriptors();
+
+        Set<String> emptyNames = new HashSet<>();
+        for (PropertyDescriptor pd : pds) {
+            Object srcValue = src.getPropertyValue(pd.getName());
+            if (srcValue == null) {
+                emptyNames.add(pd.getName());
+            }
+        }
+        String[] result = new String[emptyNames.size()];
+        return emptyNames.toArray(result);
+    }
 }

@@ -1,6 +1,8 @@
 package com.makaia.flightReservation.service;
 
 import com.makaia.flightReservation.dto.FlightTypeDTO;
+import com.makaia.flightReservation.exception.InternalServerErrorException;
+import com.makaia.flightReservation.exception.NotFoundException;
 import com.makaia.flightReservation.mapper.FlightTypeMapper;
 import com.makaia.flightReservation.model.FlightType;
 import com.makaia.flightReservation.repository.FlightTypeRepository;
@@ -8,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,40 +24,50 @@ public class FlightTypeService {
     }
 
     public FlightTypeDTO saveFlightType(FlightTypeDTO flightTypeDTO) {
-        FlightType flightType = flightTypeMapper.toFlightType(flightTypeDTO);
-        flightTypeRepository.save(flightType);
-        return flightTypeMapper.toDto(flightType);
+        try {
+            FlightType flightType = flightTypeMapper.toFlightType(flightTypeDTO);
+            flightTypeRepository.save(flightType);
+            return flightTypeMapper.toDto(flightType);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while saving flight type: " + e.getMessage());
+        }
     }
 
     public FlightTypeDTO getFlightType(Integer flightTypeId) {
-        Optional<FlightType> flightType = flightTypeRepository.findById(flightTypeId);
-        if (flightType.isPresent()) {
-            return flightTypeMapper.toDto(flightType.get());
-        }
-        throw new RuntimeException();
+        return flightTypeRepository.findById(flightTypeId)
+                .map(flightTypeMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Flight type not found with ID: " + flightTypeId));
     }
 
-    public List<FlightTypeDTO> getFlightTypes() {
-        return flightTypeRepository.findAll().stream()
-                .map(flightTypeMapper::toDto)
-                .collect(Collectors.toList());
+    public List<FlightTypeDTO> getAllFlightTypes() {
+        try {
+            return flightTypeRepository.findAll().stream()
+                    .map(flightTypeMapper::toDto)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while searching for all flight types: " + e.getMessage());
+        }
     }
 
     public FlightTypeDTO updateFlightType(FlightTypeDTO flightTypeDTO, Integer flightTypeId) {
         FlightTypeDTO flightTypeToUpdate = this.getFlightType(flightTypeId);
-
         FlightType flightType = flightTypeMapper.toFlightType(flightTypeToUpdate);
-        flightType.setFlightType(flightTypeDTO.getFlightType());
-        return flightTypeMapper.toDto(flightTypeRepository.save(flightType));
-
+        try {
+            flightType.setFlightType(flightTypeDTO.getFlightType());
+            return flightTypeMapper.toDto(flightTypeRepository.save(flightType));
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while updating flight type: " + e.getMessage());
+        }
     }
 
-    public String deleteFlightType(Integer flightTypeId) {
-        FlightTypeDTO flightTypeToDelete = this.getFlightType(flightTypeId);
-        if (flightTypeToDelete != null) {
-            flightTypeRepository.deleteById(flightTypeId);
-            return "FlightType successfully eliminated";
+    public void deleteFlightType(Integer flightTypeId) {
+        if (!flightTypeRepository.existsById(flightTypeId)) {
+            throw new NotFoundException("Flight type not found with ID: " + flightTypeId);
         }
-        throw new RuntimeException();
+        try {
+            flightTypeRepository.deleteById(flightTypeId);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while deleting flight type: " + e.getMessage());
+        }
     }
 }

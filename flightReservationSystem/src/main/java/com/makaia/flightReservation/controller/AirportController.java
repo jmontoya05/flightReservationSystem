@@ -38,8 +38,8 @@ public class AirportController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AirportDTO>> getAirports() {
-        return new ResponseEntity<>(airportService.getAirports(), HttpStatus.OK);
+    public ResponseEntity<List<AirportDTO>> getAllAirports() {
+        return new ResponseEntity<>(airportService.getAllAirports(), HttpStatus.OK);
     }
 
     @PutMapping("/{airportId}")
