@@ -26,8 +26,7 @@ public class CountryService {
     public CountryDTO saveCountry(CountryDTO countryDTO) {
         try {
             Country country = countryMapper.toCountry(countryDTO);
-            countryRepository.save(country);
-            return countryMapper.toDto(country);
+            return countryMapper.toDto(countryRepository.save(country));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving country: " + e.getMessage());
         }
@@ -50,8 +49,8 @@ public class CountryService {
     }
 
     public CountryDTO updateCountry(CountryDTO countryDTO, Integer countryId) {
-        CountryDTO countryToUpdate = this.getCountry(countryId);
-        Country country = countryMapper.toCountry(countryToUpdate);
+        Country country = countryRepository.findById(countryId)
+                .orElseThrow(() -> new NotFoundException("Airline not found with ID: " + countryId));
         try {
             country.setCountry(countryDTO.getCountry());
             return countryMapper.toDto(countryRepository.save(country));

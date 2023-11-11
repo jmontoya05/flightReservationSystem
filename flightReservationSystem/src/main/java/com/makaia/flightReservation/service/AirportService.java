@@ -50,8 +50,8 @@ public class AirportService {
     }
 
     public AirportDTO updateAirport(AirportDTO airportDTO, Integer airportId) {
-        AirportDTO airportToUpdate = this.getAirport(airportId);
-        Airport airport = airportMapper.toAirport(airportToUpdate);
+        Airport airport = airportRepository.findById(airportId)
+                .orElseThrow(() -> new NotFoundException("Airline not found with ID: " + airportId));
         try {
             airport.setAirportName(airportDTO.getAirportName());
             return airportMapper.toDto(airportRepository.save(airport));

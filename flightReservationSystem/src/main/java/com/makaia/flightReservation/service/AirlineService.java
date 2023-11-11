@@ -28,8 +28,7 @@ public class AirlineService {
         airlineDTO.setFlightSequence(0);
         Airline airline = airlineMapper.toAirline(airlineDTO);
         try {
-            airlineRepository.save(airline);
-            return airlineMapper.toDto(airline);
+            return airlineMapper.toDto(airlineRepository.save(airline));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving airline: " + e.getMessage());
         }

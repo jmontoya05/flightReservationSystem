@@ -36,7 +36,7 @@ public class FlightController {
     public ResponseEntity<FlightCustomPage> getFlights(
             @RequestParam(required = false) String origin,
             @RequestParam(required = false) String destination,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate departureDate,
+            @RequestParam(name = "departure-date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate departureDate,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int pageSize) {
         return new ResponseEntity<>(flightService.getFlights(origin, destination, departureDate, page, pageSize), HttpStatus.OK);

@@ -26,8 +26,7 @@ public class FlightTypeService {
     public FlightTypeDTO saveFlightType(FlightTypeDTO flightTypeDTO) {
         try {
             FlightType flightType = flightTypeMapper.toFlightType(flightTypeDTO);
-            flightTypeRepository.save(flightType);
-            return flightTypeMapper.toDto(flightType);
+            return flightTypeMapper.toDto(flightTypeRepository.save(flightType));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving flight type: " + e.getMessage());
         }
@@ -50,8 +49,8 @@ public class FlightTypeService {
     }
 
     public FlightTypeDTO updateFlightType(FlightTypeDTO flightTypeDTO, Integer flightTypeId) {
-        FlightTypeDTO flightTypeToUpdate = this.getFlightType(flightTypeId);
-        FlightType flightType = flightTypeMapper.toFlightType(flightTypeToUpdate);
+        FlightType flightType = flightTypeRepository.findById(flightTypeId)
+                .orElseThrow(() -> new NotFoundException("Airline not found with ID: " + flightTypeId));
         try {
             flightType.setFlightType(flightTypeDTO.getFlightType());
             return flightTypeMapper.toDto(flightTypeRepository.save(flightType));
