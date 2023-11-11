@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class AirlineController {
 
     @GetMapping
     public ResponseEntity<List<AirlineDTO>> getAirlines() {
-        return new ResponseEntity<>(airlineService.getAllAirlines(), HttpStatus.OK);
+        return new ResponseEntity<>(airlineService.getAirlines(), HttpStatus.OK);
     }
 
     @PutMapping("/{airlineId}")
@@ -47,7 +48,8 @@ public class AirlineController {
     }
 
     @DeleteMapping("/{airlineId}")
-    public ResponseEntity<String> deleteAirline(@PathVariable Integer airlineId) {
-        return new ResponseEntity<>(airlineService.deleteAirline(airlineId), HttpStatus.NO_CONTENT);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAirline(@PathVariable Integer airlineId) {
+        airlineService.deleteAirline(airlineId);
     }
 }

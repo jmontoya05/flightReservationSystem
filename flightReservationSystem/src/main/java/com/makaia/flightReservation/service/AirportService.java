@@ -1,6 +1,8 @@
 package com.makaia.flightReservation.service;
 
 import com.makaia.flightReservation.dto.AirportDTO;
+import com.makaia.flightReservation.exception.InternalServerErrorException;
+import com.makaia.flightReservation.exception.NotFoundException;
 import com.makaia.flightReservation.mapper.AirportMapper;
 import com.makaia.flightReservation.model.Airport;
 import com.makaia.flightReservation.repository.AirportRepository;
@@ -8,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,23 +24,29 @@ public class AirportService {
     }
 
     public AirportDTO saveAirport(AirportDTO airportDTO) {
-        Airport airport = airportMapper.toAirport(airportDTO);
-        airportRepository.save(airport);
-        return airportMapper.toDto(airport);
+        try {
+            Airport airport = airportMapper.toAirport(airportDTO);
+            airportRepository.save(airport);
+            return airportMapper.toDto(airport);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while saving airport: " + e.getMessage());
+        }
     }
 
     public AirportDTO getAirport(Integer airportId) {
-        Optional<Airport> airport = airportRepository.findById(airportId);
-        if (airport.isPresent()) {
-            return airportMapper.toDto(airport.get());
-        }
-        throw new RuntimeException();
+        return airportRepository.findById(airportId)
+                .map(airportMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Airport not found with ID: " + airportId));
     }
 
     public List<AirportDTO> getAirports() {
-        return airportRepository.findAll().stream()
-                .map(airportMapper::toDto)
-                .collect(Collectors.toList());
+        try {
+            return airportRepository.findAll().stream()
+                    .map(airportMapper::toDto)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while searching for all airports: " + e.getMessage());
+        }
     }
 
     public AirportDTO updateAirport(AirportDTO airportDTO, Integer airportId) {
@@ -49,12 +56,10 @@ public class AirportService {
         return airportMapper.toDto(airportRepository.save(airport));
     }
 
-    public String deleteAirport(Integer airportId) {
-        AirportDTO AirportToDelete = this.getAirport(airportId);
-        if (AirportToDelete != null) {
-            airportRepository.deleteById(airportId);
-            return "Airport successfully eliminated";
+    public void deleteAirport(Integer airportId) {
+        if (!airportRepository.existsById(airportId)) {
+            throw new NotFoundException("Airport not found with ID: " + airportId);
         }
-        throw new RuntimeException();
+        airportRepository.deleteById(airportId);
     }
 }

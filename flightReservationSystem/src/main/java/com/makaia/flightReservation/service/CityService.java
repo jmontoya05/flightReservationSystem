@@ -1,7 +1,8 @@
 package com.makaia.flightReservation.service;
 
 import com.makaia.flightReservation.dto.CityDTO;
-import com.makaia.flightReservation.exception.BadRequestsException;
+import com.makaia.flightReservation.exception.InternalServerErrorException;
+import com.makaia.flightReservation.exception.NotFoundException;
 import com.makaia.flightReservation.mapper.CityMapper;
 import com.makaia.flightReservation.model.City;
 import com.makaia.flightReservation.repository.CityRepository;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,23 +25,29 @@ public class CityService {
     }
 
     public CityDTO saveCity(CityDTO cityDTO) {
-        City city = cityMapper.toCity(cityDTO);
-        cityRepository.save(city);
-        return cityMapper.toDto(city);
+        try {
+            City city = cityMapper.toCity(cityDTO);
+            cityRepository.save(city);
+            return cityMapper.toDto(city);
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while saving city: " + e.getMessage());
+        }
     }
 
     public CityDTO getCity(Integer cityId) {
-        Optional<City> city = cityRepository.findById(cityId);
-        if (city.isPresent()) {
-            return cityMapper.toDto(city.get());
-        }
-        throw new BadRequestsException("City not found");
+        return cityRepository.findById(cityId)
+                .map(cityMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("City not found with ID: " + cityId));
     }
 
     public List<CityDTO> getCities() {
-        return cityRepository.findAll().stream()
-                .map(cityMapper::toDto)
-                .collect(Collectors.toList());
+        try {
+            return cityRepository.findAll().stream()
+                    .map(cityMapper::toDto)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new InternalServerErrorException("Internal Server Error occurred while searching for all cities: " + e.getMessage());
+        }
     }
 
     public CityDTO updateCity(CityDTO cityDTO, Integer cityId) {
@@ -51,12 +57,10 @@ public class CityService {
         return cityMapper.toDto(cityRepository.save(city));
     }
 
-    public String deleteCity(Integer cityId) {
-        CityDTO cityToDelete = this.getCity(cityId);
-        if (cityToDelete != null) {
-            cityRepository.deleteById(cityId);
-            return "City successfully eliminated";
+    public void deleteCity(Integer cityId) {
+        if (!cityRepository.existsById(cityId)){
+            throw new NotFoundException("Airport not found with ID: " + cityId);
         }
-        throw new RuntimeException();
+        cityRepository.deleteById(cityId);
     }
 }

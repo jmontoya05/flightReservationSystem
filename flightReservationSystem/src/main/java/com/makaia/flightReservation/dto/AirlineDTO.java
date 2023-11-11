@@ -1,8 +1,11 @@
 package com.makaia.flightReservation.dto;
 
+import javax.validation.constraints.NotBlank;
+
 
 public class AirlineDTO {
     private Integer airlineId;
+    @NotBlank(message = "Airline name cannot be blank")
     private String airlineName;
     private Integer flightSequence;
 
