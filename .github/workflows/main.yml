@@ -1,7 +1,10 @@
-name: Continuous Integration
+name: Continuous integration with GitHub
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
 
@@ -11,15 +14,19 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: "11"
+          distribution: "temurin"
 
       - name: Clean project
         run: ./flightReservationSystem/gradlew clean
 
       - name: Run all tests
         run: ./flightReservationSystem/gradlew testClasses
+
+      - name: Create JAR and install
+        run: ./flightReservationSystem/gradlew bootJar
