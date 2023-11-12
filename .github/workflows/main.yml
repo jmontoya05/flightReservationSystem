@@ -26,10 +26,10 @@ jobs:
         run: chmod +x ./flightReservationSystem/gradlew
 
       - name: Clean project
-        run: ./gradlew clean
+        run: ./flightReservationSystem/gradlew clean
 
       - name: Run all tests
-        run: ./gradlew testClasses
+        run: ./flightReservationSystem/gradlew testClasses
 
       - name: Create JAR and install
-        run: ./gradlew bootJar
+        run: ./flightReservationSystem/gradlew bootJar
