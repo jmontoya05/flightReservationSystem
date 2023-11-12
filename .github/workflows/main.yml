@@ -25,9 +25,6 @@ jobs:
       - name: Grant execute permissions to gradlew
         run: chmod +x ./flightReservationSystem/gradlew
 
-      - name: Clean project
-        run: ./flightReservationSystem/gradlew clean
-
       - name: Run all tests
         run: ./flightReservationSystem/gradlew testClasses
 
