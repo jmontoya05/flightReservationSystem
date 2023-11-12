@@ -23,7 +23,7 @@ jobs:
           distribution: "temurin"
 
       - name: Grant execute permissions to gradlew
-        run: chmod +x ./gradlew
+        run: chmod +x ./flightReservationSystem/gradlew
 
       - name: Clean project
         run: ./gradlew clean
