@@ -61,8 +61,7 @@ public class FlightService {
         flight.setFlightCode(generateFlightCode(flight.getAirlineId()));
         flight.setReservationsCount(0);
         try {
-            flightRepository.save(flight);
-            return flightMapper.toRequestDto(flight);
+            return flightMapper.toRequestDto(flightRepository.save(flight));
         } catch (Exception e) {
             throw new InternalServerErrorException("Internal Server Error occurred while saving flight: " + e.getMessage());
         }
@@ -169,7 +168,7 @@ public class FlightService {
         return flightCode;
     }
 
-    private Page<Flight> queryFlights(List<Integer> airportsOrigin, List<Integer> airportsDestination, LocalDate departureDate, PageRequest pageRequest) {
+    public Page<Flight> queryFlights(List<Integer> airportsOrigin, List<Integer> airportsDestination, LocalDate departureDate, PageRequest pageRequest) {
         LocalDateTime startDay = departureDate != null ? departureDate.atStartOfDay() : null;
         LocalDateTime endDay = departureDate != null ? departureDate.atTime(LocalTime.of(23, 59, 59)) : null;
 
@@ -200,7 +199,7 @@ public class FlightService {
         }
     }
 
-    private List<Integer> getAirports(String cityName) {
+    public List<Integer> getAirports(String cityName) {
         City city = getCity(cityName.toLowerCase());
         if (city == null) {
             return Collections.emptyList();

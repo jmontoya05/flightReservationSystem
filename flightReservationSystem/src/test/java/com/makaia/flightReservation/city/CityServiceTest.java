@@ -43,7 +43,7 @@ public class CityServiceTest {
         CityDTO validCityDTO = new CityDTO();
         validCityDTO.setCityId(1);
         validCityDTO.setCity("Test City");
-        validCityDTO.setCountryId(1);  // Assuming countryId is valid for the test
+        validCityDTO.setCountryId(1);
 
         City validCity = new City();
         validCity.setCityId(1);
@@ -205,7 +205,7 @@ public class CityServiceTest {
     }
 
     @Test
-    void deleteCity_NonExistingCityId_ShouldThrowNotFoundException() {
+    void deleteCityWhenNonExistingCityId() {
         // Arrange
         int nonExistingCityId = 999;
 

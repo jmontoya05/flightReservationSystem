@@ -44,7 +44,7 @@ public class AirportServiceTest {
         AirportDTO validAirportDTO = new AirportDTO();
         validAirportDTO.setCityId(1);
         validAirportDTO.setAirportName("Test Airport");
-        validAirportDTO.setCityId(1);  // Assuming cityId is valid for the test
+        validAirportDTO.setCityId(1);
 
         Airport validAirport = new Airport();
         validAirport.setAirportId(1);
@@ -182,7 +182,7 @@ public class AirportServiceTest {
     }
 
     @Test
-    void updateAirport_NonExistingAirportId_ShouldThrowNotFoundException() {
+    void updateAirportWhenNonExistingAirportId() {
         // Arrange
         int nonExistingAirportId = 999;
         AirportDTO updatedAirportDTO = new AirportDTO();
@@ -197,7 +197,7 @@ public class AirportServiceTest {
     }
 
     @Test
-    void deleteAirport_ExistingAirportId_ShouldDeleteAirport() {
+    void deleteAirport() {
         // Arrange
         int existingAirportId = 1;
 
@@ -211,7 +211,7 @@ public class AirportServiceTest {
     }
 
     @Test
-    void deleteAirport_NonExistingAirportId_ShouldThrowNotFoundException() {
+    void deleteAirportWhenNonExistingAirportId() {
         // Arrange
         int nonExistingAirportId = 999;
 
