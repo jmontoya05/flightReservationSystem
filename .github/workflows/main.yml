@@ -23,13 +23,13 @@ jobs:
           distribution: "temurin"
 
       - name: Grant execute permissions to gradlew
-        run: chmod +x ./flightReservationSystem/gradlew
+        run: chmod +x ./gradlew
 
       - name: Clean project
-        run: ./flightReservationSystem/gradlew clean
+        run: ./gradlew clean
 
       - name: Run all tests
-        run: ./flightReservationSystem/gradlew testClasses
+        run: ./gradlew testClasses
 
       - name: Create JAR and install
-        run: ./flightReservationSystem/gradlew bootJar
+        run: ./gradlew bootJar
