@@ -21,6 +21,9 @@ jobs:
         with:
           java-version: "11"
           distribution: "temurin"
+      
+      - name: Grant execute permissions to gradlew
+      run: chmod +x ./flightReservationSystem/gradlew
 
       - name: Clean project
         run: ./flightReservationSystem/gradlew clean
