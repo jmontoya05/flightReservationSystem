@@ -124,3 +124,6 @@ Una vez que se obtiene el token de seguridad, se debe incluir en la cabecera de 
 - `Authorization: Bearer <token>`
 
 Con el token adecuado, el usuario tendrá acceso a los endpoints según su rol y podrá utilizar las funcionalidades proporcionadas por la aplicación.
+
+
+
