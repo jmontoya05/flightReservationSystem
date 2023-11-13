@@ -20,6 +20,7 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer userId;
     @Column(nullable = false, length = 30)
     private String username;
@@ -27,12 +28,12 @@ public class User implements UserDetails {
     private String firstName;
     @Column(name = "last_name", nullable = false, length = 30)
     private String lastName;
-    @Column(nullable = false)
+    @Column(name = "user_password", nullable = false)
     private String password;
-    @Column(name = "rol_id", nullable = false)
+    @Column(name = "role_id", nullable = false)
     private Integer roleId;
     @ManyToOne
-    @JoinColumn(name = "rol_id", insertable = false, updatable = false)
+    @JoinColumn(name = "role_id", insertable = false, updatable = false)
     private Role role;
 
     public User() {
