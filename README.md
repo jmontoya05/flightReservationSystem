@@ -10,7 +10,7 @@ El **Sistema de reservas de vuelos** es una solución integral diseñada para ab
 
 ## Tecnologías Utilizadas
 
-**IntelliJ IDEA:** Entorno de desarrollo integrado (IDE) altamente potente y versátil desarrollado por JetBrains. Ofrece herramientas avanzadas para la creación, depuración y gestión de proyectos Java, facilitando el desarrollo de software con una interfaz intuitiva y funciones inteligentes.
+- **IntelliJ IDEA:** Entorno de desarrollo integrado (IDE) altamente potente y versátil desarrollado por JetBrains. Ofrece herramientas avanzadas para la creación, depuración y gestión de proyectos Java, facilitando el desarrollo de software con una interfaz intuitiva y funciones inteligentes.
 
 - **Java 11:** Lenguaje de programación versátil y robusto que forma la base del desarrollo de la API.
 
