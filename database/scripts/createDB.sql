@@ -69,3 +69,19 @@ CREATE TABLE reservations (
     FOREIGN KEY (flight_code) REFERENCES flights(flight_code),
     FOREIGN KEY (passenger_id) REFERENCES passengers(passenger_id)
 );
+
+CREATE TABLE roles (
+	role_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    role_name VARCHAR(15) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+	user_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(30) NOT NULL UNIQUE,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
+    role_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(role_id)
+);
+
