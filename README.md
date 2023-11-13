@@ -10,6 +10,8 @@ El **Sistema de reservas de vuelos** es una solución integral diseñada para ab
 
 ## Tecnologías Utilizadas
 
+**IntelliJ IDEA:** Entorno de desarrollo integrado (IDE) altamente potente y versátil desarrollado por JetBrains. Ofrece herramientas avanzadas para la creación, depuración y gestión de proyectos Java, facilitando el desarrollo de software con una interfaz intuitiva y funciones inteligentes.
+
 - **Java 11:** Lenguaje de programación versátil y robusto que forma la base del desarrollo de la API.
 
 - **Spring Boot 2.7.17:** Framework que simplifica el desarrollo de aplicaciones Java, proporcionando configuraciones predeterminadas y una estructura fácil de usar.
@@ -34,13 +36,13 @@ El **Sistema de reservas de vuelos** es una solución integral diseñada para ab
 
 _¡A volar con tecnología de vanguardia!_ 🚀✈️
 
+![Herramientas](https://skills.thijs.gg/icons?i=idea,java,spring,gradle,hibernate,mysql,git,github,githubactions,postman)
+
 ## Diagrama de Clases
 
 El **Diagrama de Clases** representa las clases y las relaciones entre ellas en el sistema. Muestra la estructura estática del sistema, incluyendo las clases, sus atributos, métodos y cómo se relacionan. Este diagrama proporciona una visión general de la arquitectura y la organización de clases en el código fuente.
 
 ![Diagrama de Clases](/classDiagram/flightReservationSystem.png)
-
-El **Diagrama Relacional** ilustra la estructura de las tablas y las relaciones entre ellas en la base de datos. Muestra cómo las entidades están conectadas y cómo se relacionan a través de claves primarias y foráneas. Este diagrama es esencial para comprender la arquitectura de la base de datos y cómo se almacena la información de manera relacionada.
 
 ## Diagrama Relacional
 
