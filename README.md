@@ -40,13 +40,13 @@ El **Sistema de reservas de vuelos** es una solución integral diseñada para ab
 
 El **Diagrama de Clases** representa las clases y las relaciones entre ellas en el sistema. Muestra la estructura estática del sistema, incluyendo las clases, sus atributos, métodos y cómo se relacionan. Este diagrama proporciona una visión general de la arquitectura y la organización de clases en el código fuente.
 
-![Diagrama de Clases](/classDiagram/flightReservationSystem.png)
+![Diagrama de Clases](/src/main/resources/static/images/flightReservationSystem.png)
 
 ## Diagrama Relacional
 
 El **Diagrama Relacional** ilustra la estructura de las tablas y las relaciones entre ellas en la base de datos. Muestra cómo las entidades están conectadas y cómo se relacionan a través de claves primarias y foráneas. Este diagrama es esencial para comprender la arquitectura de la base de datos y cómo se almacena la información de manera relacionada.
 
-![Diagrama Relacional](/database/diagram/flightSystem.png)
+![Diagrama Relacional](/src/main/resources/static/images/flightSystem.png)
 
 ## Uso de la Aplicación
 
