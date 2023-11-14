@@ -26,13 +26,13 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Clean project
-      run: ./gradlew clean
+        run: ./gradlew clean
 
-    - name: Build with Gradle
-      run: ./gradlew build
+      - name: Build with Gradle
+        run: ./gradlew build
 
-    - name: Run tests
-      run: ./gradlew test
+      - name: Run tests
+        run: ./gradlew test
 
       - name: Create JAR and install
         run: ./gradlew bootJar
