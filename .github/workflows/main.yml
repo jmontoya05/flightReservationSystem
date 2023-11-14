@@ -28,9 +28,6 @@ jobs:
       - name: Clean project
         run: ./gradlew clean
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
       - name: Run tests
         run: ./gradlew test
 
