@@ -31,7 +31,7 @@ public class Flight {
     private BigDecimal price;
     @Column(name = "available_seats", nullable = false)
     private Integer availableSeats;
-    @Column(name = "reservations_count", nullable = false)
+    @Column(name = "reservation_sequence", nullable = false)
     private Integer reservationsCount;
     @ManyToOne
     @JoinColumn(name = "airline_id", insertable = false, updatable = false)

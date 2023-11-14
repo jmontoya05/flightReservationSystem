@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeRequests(
                         authorizeRequests ->
                                 authorizeRequests
-                                        .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+                                        .antMatchers("/v3/api-docs/**", "/configuration/**", "/swagger-ui/**", "/webjars/**").permitAll()
                                         .antMatchers("/auth/**").permitAll()
                                         .antMatchers(HttpMethod.GET, "/flights/**").hasAnyAuthority("ADMIN", "AIRLINE")
                                         .anyRequest().authenticated()

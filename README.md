@@ -34,8 +34,6 @@ El **Sistema de reservas de vuelos** es una solución integral diseñada para ab
 
 - **Postman:** Plataforma para el desarrollo y prueba de APIs, facilitando la validación de endpoints y la interacción con la API.
 
-_¡A volar con tecnología de vanguardia!_ 🚀✈️
-
 ![Herramientas](https://skills.thijs.gg/icons?i=idea,java,spring,gradle,hibernate,mysql,git,github,githubactions,postman)
 
 ## Diagrama de Clases
@@ -308,3 +306,5 @@ Se ha realizado un análisis de cobertura de código para evaluar la extensión 
 
 2. **Informe de Cobertura:**
    - Revisa el informe de cobertura generado para identificar áreas del código que pueden necesitar pruebas adicionales.
+
+_¡A volar con tecnología de vanguardia!_ 🚀✈️
