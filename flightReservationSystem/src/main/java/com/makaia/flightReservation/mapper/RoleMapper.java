@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface RoleMapper {
     RoleDTO toDto(Role role);
     Role toRole(RoleDTO roleDTO);
-
+    @Mapping(target = "role", expression = "java(roleRequestDTO.getRole().toUpperCase())")
     @Mapping(target = "roleId", ignore = true)
     Role requestToRole(RoleRequestDTO roleRequestDTO);
 }
