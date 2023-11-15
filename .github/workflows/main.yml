@@ -1,4 +1,4 @@
-name: Continuous integration with GitHub
+name: Build, Test, and Deploy
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   test_build:
@@ -33,3 +34,50 @@ jobs:
 
       - name: Create JAR and install
         run: ./gradlew bootJar
+
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java version and Gradle
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Grant execute permission to Gradlew script
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: java-app
+          path: '${{ github.workspace }}/build/libs/*.jar'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build_and_deploy
+    environment:
+      name: 'Production'
+      url: ${{ needs.build_and_deploy.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: java-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'makaia-flight-api'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7977963F6C944355A87EF2DEFAB326F5 }}
+          package: 'java-app/*.jar'
+
