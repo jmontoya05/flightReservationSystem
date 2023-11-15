@@ -32,9 +32,6 @@ jobs:
       - name: Run tests
         run: ./gradlew test
 
-      - name: Create JAR and install
-        run: ./gradlew bootJar
-
   build_and_deploy:
     runs-on: ubuntu-latest
 
