@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 // Permitir acceso sin autenticación a rutas específicas
-                                .antMatchers(HttpMethod.POST, "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
+                                /*.antMatchers(HttpMethod.POST, "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
                                 .antMatchers(HttpMethod.GET, "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
                                 // Restricciones específicas por método HTTP
                                 .antMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
@@ -39,9 +39,9 @@ public class SecurityConfig {
                                 .antMatchers(HttpMethod.GET, "/flights/**").permitAll() // Todos pueden acceder
                                 .antMatchers(HttpMethod.GET, "/reservations/{reservationCode}", "/reservations/passenger/{passengerId}").hasAnyAuthority("USER")
                                 .antMatchers(HttpMethod.GET, "/reservations").hasAnyAuthority("ADMIN", "AIRLINE")
-                                .antMatchers(HttpMethod.POST, "/reservations/**").hasAnyAuthority("ADMIN", "AIRLINE", "USER")
+                                .antMatchers(HttpMethod.POST, "/reservations/**").hasAnyAuthority("ADMIN", "AIRLINE", "USER")*/
                                 // Todas las demás peticiones requieren autenticación
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                 )
 
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
