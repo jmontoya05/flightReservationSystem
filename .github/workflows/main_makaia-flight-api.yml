@@ -21,7 +21,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      
+          
+      - name: Grant execute permission to Gradlew script
+        run: chmod +x ./gradlew
+
       - name: Build with Gradle
         run: ./gradlew build
 
