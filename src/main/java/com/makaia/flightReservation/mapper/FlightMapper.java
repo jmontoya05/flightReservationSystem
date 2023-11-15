@@ -24,6 +24,8 @@ public interface FlightMapper {
     @Mapping(target = "airportOriginId", ignore = true)
     @Mapping(target = "airportDestinationId", ignore = true)
     @Mapping(target = "airlineId", ignore = true)
+    @Mapping(target = "airportOrigin.city", ignore = true)
+    @Mapping(target = "airportDestination.city", ignore = true)
     Flight responseToFlight(FlightResponseDTO flightResponseDTO);
 
 }

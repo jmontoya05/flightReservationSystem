@@ -11,5 +11,6 @@ public interface CityMapper {
 
     @Mapping(target = "city", expression = "java(cityDTO.getCity().toLowerCase())")
     @Mapping(target = "country", ignore = true)
+    @Mapping(target = "airports", ignore = true)
     City toCity(CityDTO cityDTO);
 }

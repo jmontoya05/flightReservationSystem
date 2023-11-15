@@ -28,17 +28,18 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 // Permitir acceso sin autenticación a rutas específicas
-                                .antMatchers("/v3/api-docs/**", "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
+                                .antMatchers(
+                                        "/v3/api-docs/**", "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
+                                // Restricciones específicas para rutas
+                                .antMatchers("/users", "/roles").hasAuthority("ADMIN")
+                                .antMatchers(HttpMethod.GET, "/reservations/{reservationCode}", "/reservations/passenger/{passengerId}", "/flights/**").hasAnyAuthority("USER", "AIRLINE", "ADMIN")
+                                .antMatchers(HttpMethod.GET, "/reservations").hasAnyAuthority("ADMIN", "AIRLINE")
+                                .antMatchers(HttpMethod.POST, "/reservations/**").hasAnyAuthority("ADMIN", "AIRLINE", "USER")
                                 // Restricciones específicas por método HTTP
                                 .antMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
                                 .antMatchers(HttpMethod.PUT).hasAnyAuthority("ADMIN", "AIRLINE")
                                 .antMatchers(HttpMethod.POST).hasAnyAuthority("ADMIN", "AIRLINE")
-                                // Restricciones específicas para rutas
-                                .antMatchers("/users", "/roles").hasAuthority("ADMIN")
-                                .antMatchers(HttpMethod.GET, "/flights/**").permitAll() // Todos pueden acceder
-                                .antMatchers(HttpMethod.GET, "/reservations/{reservationCode}", "/reservations/passenger/{passengerId}").hasAnyAuthority("USER")
-                                .antMatchers(HttpMethod.GET, "/reservations").hasAnyAuthority("ADMIN", "AIRLINE")
-                                .antMatchers(HttpMethod.POST, "/reservations/**").hasAnyAuthority("ADMIN", "AIRLINE", "USER")
+                                .antMatchers(HttpMethod.GET).hasAnyAuthority("ADMIN", "AIRLINE")
                                 // Todas las demás peticiones requieren autenticación
                                 .anyRequest().authenticated()
                 )
