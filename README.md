@@ -56,7 +56,7 @@ El **Diagrama Relacional** ilustra la estructura de las tablas y las relaciones 
 
 Para nuevos usuarios, el registro se realiza a través del siguiente endpoint:
 
-**Endpoint:** `POST /api/registro`
+**Endpoint:** `POST https://makaia-flight-api.azurewebsites.nethttps://makaia-flight-api.azurewebsites.net/api/v1/v1/registro`
 
 **Descripción:** Registra un nuevo usuario en el sistema asignándole el rol de USER.
 
@@ -86,7 +86,7 @@ Para nuevos usuarios, el registro se realiza a través del siguiente endpoint:
 
 Para usuarios ya registrados, el inicio de sesión se realiza a través del siguiente endpoint:
 
-**Endpoint:** `POST /api/login`
+**Endpoint:** `POST https://makaia-flight-api.azurewebsites.net/api/v1/login`
 
 **Descripción:** Inicia sesión y obtiene un token de seguridad.
 
@@ -115,14 +115,21 @@ Para usuarios ya registrados, el inicio de sesión se realiza a través del sigu
 
 ## Endpoints de la Aplicación
 
+Los endpoints en una aplicación son puntos de acceso específicos a través de los cuales las solicitudes y respuestas de la aplicación pueden interactuar con el mundo exterior. En el contexto de una API (Interfaz de Programación de Aplicaciones), los endpoints son URLs específicas que representan diferentes funcionalidades o recursos de la aplicación.
+
+Cada endpoint está asociado con una operación específica, como obtener información, enviar datos, actualizar recursos, o eliminar datos. Los endpoints son esenciales para la comunicación entre aplicaciones, permitiendo que diferentes sistemas intercambien datos y realicen acciones a través de la red.
+
+Te invito a explorar la documentación completa de la API en el siguiente enlace: [Documentación de la API](https://makaia-flight-api.azurewebsites.net/api/v1/swagger-ui/index.html)
+. Allí encontrarás información detallada sobre cada endpoint disponible, los métodos de solicitud admitidos, los parámetros necesarios y las respuestas esperadas. La documentación es una herramienta valiosa para comprender cómo interactuar con la API de manera efectiva y aprovechar al máximo sus funcionalidades.
+
 ### Auth Controller
 
 El Auth Controller gestiona las operaciones de autenticación y autorización. En particular, las funciones proporcionadas permiten a los usuarios registrarse en el sistema y realizar el inicio de sesión.
 
-| Endpoint        | Tipo de Petición | Función                                  | Roles Permitidos       |
-| --------------- | ---------------- | ---------------------------------------- | ---------------------- |
-| `/api/login`    | POST             | Permite loguear un usuario al sistema.   | Todos (sin autenticar) |
-| `/api/register` | POST             | Permite registrar un usuario al sistema. | Todos (sin autenticar) |
+| Endpoint                                                      | Tipo de Petición | Función                                  | Roles Permitidos       |
+| ------------------------------------------------------------- | ---------------- | ---------------------------------------- | ---------------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/login`    | POST             | Permite loguear un usuario al sistema.   | Todos (sin autenticar) |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/register` | POST             | Permite registrar un usuario al sistema. | Todos (sin autenticar) |
 
 #### Acceso a los Endpoints
 
@@ -138,115 +145,115 @@ Con el token adecuado, el usuario tendrá acceso a los endpoints según su rol y
 
 El Flight Controller en tu aplicación proporciona una interfaz para la gestión de vuelos, permitiendo a las aerolíneas y usuarios acceder y manipular la información relacionada con los vuelos. Los endpoints ofrecen funcionalidades clave para la creación, visualización, actualización y eliminación de vuelos. A través de estos endpoints, los operadores de aerolínea pueden agregar nuevos vuelos, actualizar información existente, y los usuarios registrados pueden acceder a detalles específicos de vuelos, así como buscar y explorar la lista de vuelos disponibles
 
-| Endpoint                    | Tipo de Petición | Función                                                 | Roles Permitidos     |
-| --------------------------- | ---------------- | ------------------------------------------------------- | -------------------- |
-| `/api/flights`              | POST             | Crea un nuevo vuelo.                                    | AIRLINE, ADMIN       |
-| `/api/flights/{flightCode}` | GET              | Obtiene los detalles de un vuelo específico.            | AIRLINE, USER, ADMIN |
-| `/api/flights`              | GET              | Obtiene la lista de vuelos según criterios específicos. | AIRLINE, USER, ADMIN |
-| `/api/flights/{flightCode}` | PUT              | Actualiza la información de un vuelo existente.         | AIRLINE, ADMIN       |
-| `/api/flights/{flightCode}` | DELETE           | Elimina un vuelo específico.                            | ADMIN                |
+| Endpoint                                                                  | Tipo de Petición | Función                                                 | Roles Permitidos     |
+| ------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------- | -------------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flights`              | POST             | Crea un nuevo vuelo.                                    | AIRLINE, ADMIN       |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flights/{flightCode}` | GET              | Obtiene los detalles de un vuelo específico.            | AIRLINE, USER, ADMIN |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flights`              | GET              | Obtiene la lista de vuelos según criterios específicos. | AIRLINE, USER, ADMIN |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flights/{flightCode}` | PUT              | Actualiza la información de un vuelo existente.         | AIRLINE, ADMIN       |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flights/{flightCode}` | DELETE           | Elimina un vuelo específico.                            | ADMIN                |
 
 ### Reservation Controller
 
 Estos endpoints permiten la gestión de reservas, incluyendo la creación, obtención de detalles, obtención de listas, obtención de reservas asociadas a un pasajero y eliminación de reservas. Los roles determinan quién tiene acceso a cada funcionalidad, asegurando un control adecuado del acceso en el sistema
 
-| Endpoint                                    | Tipo de Petición | Función                                         | Roles Permitidos     |
-| ------------------------------------------- | ---------------- | ----------------------------------------------- | -------------------- |
-| `/api/reservations`                         | POST             | Crea una nueva reserva.                         | AIRLINE, USER, ADMIN |
-| `/api/reservations/{reservationCode}`       | GET              | Obtiene los detalles de una reserva específica. | AIRLINE, USER, ADMIN |
-| `/api/reservations`                         | GET              | Obtiene la lista de todas las reservas.         | AIRLINE, ADMIN       |
-| `/api/reservations/passenger/{passengerId}` | GET              | Obtiene las reservas asociadas a un pasajero.   | AIRLINE, USER, ADMIN |
-| `/api/reservations/{reservationCode}`       | DELETE           | Elimina una reserva específica.                 | ADMIN                |
+| Endpoint                                                                                  | Tipo de Petición | Función                                         | Roles Permitidos     |
+| ----------------------------------------------------------------------------------------- | ---------------- | ----------------------------------------------- | -------------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/reservations`                         | POST             | Crea una nueva reserva.                         | AIRLINE, USER, ADMIN |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/reservations/{reservationCode}`       | GET              | Obtiene los detalles de una reserva específica. | AIRLINE, USER, ADMIN |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/reservations`                         | GET              | Obtiene la lista de todas las reservas.         | AIRLINE, ADMIN       |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/reservations/passenger/{passengerId}` | GET              | Obtiene las reservas asociadas a un pasajero.   | AIRLINE, USER, ADMIN |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/reservations/{reservationCode}`       | DELETE           | Elimina una reserva específica.                 | ADMIN                |
 
 ### Passenger Controller
 
 El Passenger Controller gestiona las operaciones relacionadas con la entidad de pasajero. Proporciona endpoints para la creación, obtención, actualización y eliminación de información de pasajeros. Los usuarios con roles AIRLINE y ADMIN tienen acceso a estas funcionalidades, permitiéndoles administrar y mantener los registros de pasajeros en el sistema. Estos endpoints permiten a las aerolíneas (AIRLINE) gestionar la información de los pasajeros asociados a sus vuelos, y a los administradores (ADMIN) realizar operaciones de mantenimiento en la base de datos de pasajeros
 
-| Endpoint                        | Tipo de Petición | Función                                            | Roles Permitidos |
-| ------------------------------- | ---------------- | -------------------------------------------------- | ---------------- |
-| `/api/passengers`               | POST             | Crea un nuevo pasajero.                            | AIRLINE, ADMIN   |
-| `/api/passengers/{passengerId}` | GET              | Obtiene los detalles de un pasajero específico.    | AIRLINE, ADMIN   |
-| `/api/passengers`               | GET              | Obtiene la lista de todos los pasajeros.           | AIRLINE, ADMIN   |
-| `/api/passengers/{passengerId}` | PUT              | Actualiza la información de un pasajero existente. | AIRLINE, ADMIN   |
-| `/api/passengers/{passengerId}` | DELETE           | Elimina un pasajero específico.                    | ADMIN            |
+| Endpoint                                                                      | Tipo de Petición | Función                                            | Roles Permitidos |
+| ----------------------------------------------------------------------------- | ---------------- | -------------------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/passengers`               | POST             | Crea un nuevo pasajero.                            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/passengers/{passengerId}` | GET              | Obtiene los detalles de un pasajero específico.    | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/passengers`               | GET              | Obtiene la lista de todos los pasajeros.           | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/passengers/{passengerId}` | PUT              | Actualiza la información de un pasajero existente. | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/passengers/{passengerId}` | DELETE           | Elimina un pasajero específico.                    | ADMIN            |
 
 ### FlightType Controller
 
 El FlightType Controller facilita la gestión de los diferentes tipos de vuelos disponibles. Proporciona endpoints para la creación, obtención, actualización y eliminación de información relacionada con los tipos de vuelo. Los usuarios con roles AIRLINE y ADMIN tienen acceso a estas funcionalidades, permitiéndoles administrar y mantener la diversidad de tipos de vuelo en el sistema. Estos endpoints son cruciales para la personalización y adaptabilidad de los tipos de vuelo, ya que permiten a las aerolíneas (AIRLINE) y administradores (ADMIN) realizar operaciones que afectan directamente a la clasificación y características de los vuelos disponibles
 
-| Endpoint                           | Tipo de Petición | Función                                                 | Roles Permitidos |
-| ---------------------------------- | ---------------- | ------------------------------------------------------- | ---------------- |
-| `/api/flight-types`                | POST             | Crea un nuevo tipo de vuelo.                            | AIRLINE, ADMIN   |
-| `/api/flight-types/{flightTypeId}` | GET              | Obtiene los detalles de un tipo de vuelo específico.    | AIRLINE, ADMIN   |
-| `/api/flight-types`                | GET              | Obtiene la lista de todos los tipos de vuelo.           | AIRLINE, ADMIN   |
-| `/api/flight-types/{flightTypeId}` | PUT              | Actualiza la información de un tipo de vuelo existente. | AIRLINE, ADMIN   |
-| `/api/flight-types/{flightTypeId}` | DELETE           | Elimina un tipo de vuelo específico.                    | ADMIN            |
+| Endpoint                                                                         | Tipo de Petición | Función                                                 | Roles Permitidos |
+| -------------------------------------------------------------------------------- | ---------------- | ------------------------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flight-types`                | POST             | Crea un nuevo tipo de vuelo.                            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flight-types/{flightTypeId}` | GET              | Obtiene los detalles de un tipo de vuelo específico.    | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flight-types`                | GET              | Obtiene la lista de todos los tipos de vuelo.           | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flight-types/{flightTypeId}` | PUT              | Actualiza la información de un tipo de vuelo existente. | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/flight-types/{flightTypeId}` | DELETE           | Elimina un tipo de vuelo específico.                    | ADMIN            |
 
 ### Airline Controller
 
 El Airline Controller maneja las operaciones relacionadas con las aerolíneas. Proporciona endpoints para la creación, obtención, actualización y eliminación de información de las aerolíneas. Los usuarios con roles AIRLINE y ADMIN tienen acceso a estas funcionalidades, permitiéndoles administrar y mantener registros de las aerolíneas en el sistema. Estos endpoints son fundamentales para gestionar la información clave de las aerolíneas, como sus detalles y configuraciones
 
-| Endpoint                    | Tipo de Petición | Función                                              | Roles Permitidos |
-| --------------------------- | ---------------- | ---------------------------------------------------- | ---------------- |
-| `/api/airlines`             | POST             | Crea una nueva aerolínea.                            | AIRLINE, ADMIN   |
-| `/api/airlines/{airlineId}` | GET              | Obtiene los detalles de una aerolínea específica.    | AIRLINE, ADMIN   |
-| `/api/airlines`             | GET              | Obtiene la lista de todas las aerolíneas.            | AIRLINE, ADMIN   |
-| `/api/airlines/{airlineId}` | PUT              | Actualiza la información de una aerolínea existente. | AIRLINE, ADMIN   |
-| `/api/airlines/{airlineId}` | DELETE           | Elimina una aerolínea específica.                    | ADMIN            |
+| Endpoint                                                                  | Tipo de Petición | Función                                              | Roles Permitidos |
+| ------------------------------------------------------------------------- | ---------------- | ---------------------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airlines`             | POST             | Crea una nueva aerolínea.                            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airlines/{airlineId}` | GET              | Obtiene los detalles de una aerolínea específica.    | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airlines`             | GET              | Obtiene la lista de todas las aerolíneas.            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airlines/{airlineId}` | PUT              | Actualiza la información de una aerolínea existente. | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airlines/{airlineId}` | DELETE           | Elimina una aerolínea específica.                    | ADMIN            |
 
 ### Airport Controller
 
 El Airport Controller maneja las operaciones relacionadas con los aeropuertos. Proporciona endpoints para la creación, obtención, actualización y eliminación de información de los aeropuertos. Los usuarios con roles AIRLINE y ADMIN tienen acceso a estas funcionalidades, permitiéndoles administrar y mantener registros de los aeropuertos en el sistema. Estos endpoints son fundamentales para gestionar la información clave de los aeropuertos, como sus ubicaciones y detalles operativos
 
-| Endpoint                    | Tipo de Petición | Función                                              | Roles Permitidos |
-| --------------------------- | ---------------- | ---------------------------------------------------- | ---------------- |
-| `/api/airports`             | POST             | Crea un nuevo aeropuerto.                            | AIRLINE, ADMIN   |
-| `/api/airports/{airportId}` | GET              | Obtiene los detalles de un aeropuerto específico.    | AIRLINE, ADMIN   |
-| `/api/airports`             | GET              | Obtiene la lista de todos los aeropuertos.           | AIRLINE, ADMIN   |
-| `/api/airports/{airportId}` | PUT              | Actualiza la información de un aeropuerto existente. | AIRLINE, ADMIN   |
-| `/api/airports/{airportId}` | DELETE           | Elimina un aeropuerto específico.                    | ADMIN            |
+| Endpoint                                                                  | Tipo de Petición | Función                                              | Roles Permitidos |
+| ------------------------------------------------------------------------- | ---------------- | ---------------------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airports`             | POST             | Crea un nuevo aeropuerto.                            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airports/{airportId}` | GET              | Obtiene los detalles de un aeropuerto específico.    | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airports`             | GET              | Obtiene la lista de todos los aeropuertos.           | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airports/{airportId}` | PUT              | Actualiza la información de un aeropuerto existente. | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/airports/{airportId}` | DELETE           | Elimina un aeropuerto específico.                    | ADMIN            |
 
 ### City Controller
 
 El City Controller maneja las operaciones relacionadas con las ciudades. Proporciona endpoints para la creación, obtención, actualización y eliminación de información de ciudades. Los usuarios con roles AIRLINE y ADMIN tienen acceso a estas funcionalidades, permitiéndoles administrar y mantener registros de las ciudades en el sistema. Estos endpoints son fundamentales para gestionar información clave sobre las ubicaciones geográficas de interés, como sus nombres y detalles asociados
 
-| Endpoint               | Tipo de Petición | Función                                           | Roles Permitidos |
-| ---------------------- | ---------------- | ------------------------------------------------- | ---------------- |
-| `/api/cities`          | POST             | Crea una nueva ciudad.                            | AIRLINE, ADMIN   |
-| `/api/cities/{cityId}` | GET              | Obtiene los detalles de una ciudad específica.    | AIRLINE, ADMIN   |
-| `/api/cities`          | GET              | Obtiene la lista de todas las ciudades.           | AIRLINE, ADMIN   |
-| `/api/cities/{cityId}` | PUT              | Actualiza la información de una ciudad existente. | AIRLINE, ADMIN   |
-| `/api/cities/{cityId}` | DELETE           | Elimina una ciudad específica.                    | ADMIN            |
+| Endpoint                                                             | Tipo de Petición | Función                                           | Roles Permitidos |
+| -------------------------------------------------------------------- | ---------------- | ------------------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/cities`          | POST             | Crea una nueva ciudad.                            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/cities/{cityId}` | GET              | Obtiene los detalles de una ciudad específica.    | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/cities`          | GET              | Obtiene la lista de todas las ciudades.           | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/cities/{cityId}` | PUT              | Actualiza la información de una ciudad existente. | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/cities/{cityId}` | DELETE           | Elimina una ciudad específica.                    | ADMIN            |
 
 ### Country Controller
 
 El Country Controller maneja las operaciones relacionadas con los países. Proporciona endpoints para la creación, obtención, actualización y eliminación de información de países. Los usuarios con roles AIRLINE y ADMIN tienen acceso a estas funcionalidades, permitiéndoles administrar y mantener registros de los países en el sistema. Estos endpoints son fundamentales para gestionar información clave sobre los países, como sus nombres y detalles asociados
 
-| Endpoint                     | Tipo de Petición | Función                                        | Roles Permitidos |
-| ---------------------------- | ---------------- | ---------------------------------------------- | ---------------- |
-| `/api/countries`             | POST             | Crea un nuevo país.                            | AIRLINE, ADMIN   |
-| `/api/countries/{countryId}` | GET              | Obtiene los detalles de un país específico.    | AIRLINE, ADMIN   |
-| `/api/countries`             | GET              | Obtiene la lista de todos los países.          | AIRLINE, ADMIN   |
-| `/api/countries/{countryId}` | PUT              | Actualiza la información de un país existente. | AIRLINE, ADMIN   |
-| `/api/countries/{countryId}` | DELETE           | Elimina un país específico.                    | ADMIN            |
+| Endpoint                                                                   | Tipo de Petición | Función                                        | Roles Permitidos |
+| -------------------------------------------------------------------------- | ---------------- | ---------------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/countries`             | POST             | Crea un nuevo país.                            | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/countries/{countryId}` | GET              | Obtiene los detalles de un país específico.    | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/countries`             | GET              | Obtiene la lista de todos los países.          | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/countries/{countryId}` | PUT              | Actualiza la información de un país existente. | AIRLINE, ADMIN   |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/countries/{countryId}` | DELETE           | Elimina un país específico.                    | ADMIN            |
 
 ### User Controller
 
-El UserController gestiona operaciones específicas relacionadas con los usuarios y roles. Proporciona endpoints para obtener la lista de todos los usuarios y asignar roles a usuarios específicos. Estos endpoints están diseñados para ser accedidos únicamente por usuarios con el rol ADMIN, lo que garantiza que solo los administradores tengan la capacidad de realizar estas acciones. El endpoint /api/users permite obtener una lista completa de usuarios, y el endpoint /api/users/{userId}/{roleId} permite asignar un rol específico a un usuario mediante la asignación de IDs de usuario y rol. La limitación de acceso a roles administrativos es crucial para mantener la integridad y la seguridad del sistema, asegurando que solo los usuarios autorizados realicen operaciones que afectan a otros usuarios y sus roles
+El UserController gestiona operaciones específicas relacionadas con los usuarios y roles. Proporciona endpoints para obtener la lista de todos los usuarios y asignar roles a usuarios específicos. Estos endpoints están diseñados para ser accedidos únicamente por usuarios con el rol ADMIN, lo que garantiza que solo los administradores tengan la capacidad de realizar estas acciones. El endpoint https://makaia-flight-api.azurewebsites.net/api/v1/users permite obtener una lista completa de usuarios, y el endpoint https://makaia-flight-api.azurewebsites.net/api/v1/users/{userId}/{roleId} permite asignar un rol específico a un usuario mediante la asignación de IDs de usuario y rol. La limitación de acceso a roles administrativos es crucial para mantener la integridad y la seguridad del sistema, asegurando que solo los usuarios autorizados realicen operaciones que afectan a otros usuarios y sus roles
 
-| Endpoint                       | Tipo de Petición | Función                                 | Roles Permitidos |
-| ------------------------------ | ---------------- | --------------------------------------- | ---------------- |
-| `/api/users`                   | GET              | Obtiene la lista de todos los usuarios. | ADMIN            |
-| `/api/users/{userId}/{roleId}` | PUT              | Asigna un rol a un usuario específico.  | ADMIN            |
+| Endpoint                                                                     | Tipo de Petición | Función                                 | Roles Permitidos |
+| ---------------------------------------------------------------------------- | ---------------- | --------------------------------------- | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/users`                   | GET              | Obtiene la lista de todos los usuarios. | ADMIN            |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/users/{userId}/{roleId}` | PUT              | Asigna un rol a un usuario específico.  | ADMIN            |
 
 ### Role Controller
 
 El Role Controller gestiona las operaciones relacionadas con los roles de usuario. Proporciona endpoints para la creación de nuevos roles y la obtención de la lista de todos los roles disponibles. Estos endpoints están diseñados para ser accedidos exclusivamente por usuarios con el rol ADMIN, garantizando que solo los administradores tengan la capacidad de crear nuevos roles y visualizar la lista completa de roles en el sistema. La capacidad de definir y gestionar roles es esencial para establecer y mantener un sistema de control de acceso efectivo en tu aplicación. Limitar el acceso a estos endpoints a roles administrativos asegura la integridad y seguridad del sistema al prevenir cambios no autorizados en la estructura de roles.
 
-| Endpoint     | Tipo de Petición | Función                              | Roles Permitidos |
-| ------------ | ---------------- | ------------------------------------ | ---------------- |
-| `/api/roles` | POST             | Crea un nuevo rol.                   | ADMIN            |
-| `/api/roles` | GET              | Obtiene la lista de todos los roles. | ADMIN            |
+| Endpoint                                                   | Tipo de Petición | Función                              | Roles Permitidos |
+| ---------------------------------------------------------- | ---------------- | ------------------------------------ | ---------------- |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/roles` | POST             | Crea un nuevo rol.                   | ADMIN            |
+| `https://makaia-flight-api.azurewebsites.net/api/v1/roles` | GET              | Obtiene la lista de todos los roles. | ADMIN            |
 
 ## Pruebas Unitarias
 
