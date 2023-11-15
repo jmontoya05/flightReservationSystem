@@ -79,5 +79,5 @@ jobs:
           app-name: 'makaia-flight-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7977963F6C944355A87EF2DEFAB326F5 }}
-          package: 'java-app/*.jar'
+          package: '*.jar'
 
