@@ -76,5 +76,5 @@ jobs:
           app-name: 'makaia-flight-api'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7977963F6C944355A87EF2DEFAB326F5 }}
-          package: '${{ github.workspace }}/build/libs/flightReservationSystem-1.0-plain.jar'
+          package: '*.jar'
 
