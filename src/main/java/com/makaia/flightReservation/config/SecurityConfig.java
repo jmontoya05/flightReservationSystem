@@ -36,11 +36,11 @@ public class SecurityConfig {
                                 // Restricciones específicas para rutas
                                 .antMatchers("/users", "/roles").hasAuthority("ADMIN")
                                 .antMatchers(HttpMethod.GET, "/flights/**").permitAll() // Todos pueden acceder
-                                .antMatchers(HttpMethod.GET, "/api/reservations/{reservationCode}", "/api/reservations/passenger/{passengerId}").hasAnyAuthority("USER")
-                                .antMatchers(HttpMethod.GET, "/api/reservations").hasAnyAuthority("ADMIN", "AIRLINE")
-                                .antMatchers(HttpMethod.POST, "/api/reservations/**").hasAnyAuthority("ADMIN", "AIRLINE", "USER")
+                                .antMatchers(HttpMethod.GET, "/reservations/{reservationCode}", "/reservations/passenger/{passengerId}").hasAnyAuthority("USER")
+                                .antMatchers(HttpMethod.GET, "/reservations").hasAnyAuthority("ADMIN", "AIRLINE")
+                                .antMatchers(HttpMethod.POST, "/reservations/**").hasAnyAuthority("ADMIN", "AIRLINE", "USER")
                                 // Todas las demás peticiones requieren autenticación
-                                .anyRequest().permitAll()
+                                .anyRequest().authenticated()
                 )
 
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
