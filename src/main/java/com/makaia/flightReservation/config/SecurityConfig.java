@@ -28,7 +28,8 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 // Permitir acceso sin autenticación a rutas específicas
-                                .antMatchers("/v3/api-docs/**", "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
+                                .antMatchers(HttpMethod.POST, "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
+                                .antMatchers(HttpMethod.GET, "/configuration/**", "/swagger-ui/**", "/webjars/**", "/auth/**").permitAll()
                                 // Restricciones específicas por método HTTP
                                 .antMatchers(HttpMethod.DELETE).hasAuthority("ADMIN")
                                 .antMatchers(HttpMethod.PUT).hasAnyAuthority("ADMIN", "AIRLINE")
