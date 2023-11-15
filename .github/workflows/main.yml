@@ -54,7 +54,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/flightReservationSystem-1.0-plain.jar'
+          path: '${{ github.workspace }}/build/libs/flightReservationSystem-1.0.jar'
 
   deploy:
     runs-on: ubuntu-latest
