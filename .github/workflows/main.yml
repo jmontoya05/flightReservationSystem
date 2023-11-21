@@ -14,9 +14,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DB_URL: ${{ secrets.DATABASE_URL }}
-      DB_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-      DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
 
     steps:
       - name: Checkout repository
