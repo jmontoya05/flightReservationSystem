@@ -13,6 +13,11 @@ jobs:
   test_build:
     runs-on: ubuntu-latest
 
+    env:
+      DB_URL: ${{ secrets.DATABASE_URL }}
+      DB_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
